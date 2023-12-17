@@ -12,7 +12,7 @@ export default function Header() {
         <Link className="header__link" to="/" >Фильмы</Link>
         <Link className="header__link" to="/" >Сохранённые фильмы</Link>
       </div>
-      <img className="header__logo" src={headerProfile} alt="Логотип профиля"/>
+      <img className="header__logo-profile" src={headerProfile} alt="Логотип профиля"/>
     </div>
   )
 }
