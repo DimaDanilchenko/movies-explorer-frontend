@@ -37,7 +37,7 @@ function App() {
         <Route path="/movies" element={
           <Movies loggedIn={loggedIn} />}
         />
-        <Route path="/movies" element={
+        <Route path="/saved-movies" element={
           <SavedMovies loggedIn={loggedIn} />}
         />
         <Route path="*" element={
