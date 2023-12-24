@@ -1,0 +1,135 @@
+.about-project {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 70*2px);
+  margin: 0 auto;
+  background: #202020;
+}
+
+.about-project__title {
+  margin: 0;
+  margin-top: 110px;
+  max-width: 600px;
+  color: #FFF;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.about-project__line {
+  margin-top: 23px;
+  height: 1px;
+  background-color: #DADADA;
+}
+
+.about-project__about-project {
+  margin-top: 70px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 40px;
+}
+
+.about-project__about-inlude {}
+
+.about-project__about-inlude-title {
+  margin: 0;
+  color: #FFF;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.8px;
+}
+
+.about-project__about-inlude-subtitle {
+  margin: 0;
+  margin-top: 26px;
+  color: #FFF;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.about-project__time-project {
+  display: flex;
+  flex-direction: row;
+  margin-top: 110px;
+  margin-bottom: 141px;
+}
+
+.about-project__backend {
+  background: #3DDC84;
+  width: 228px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  justify-content: center;
+  height: 36px;
+}
+
+.about-project__backend-title {
+  margin: 0;
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.about-project__backend-subtitle {
+  margin: 0;
+  position: absolute;
+  top: 50px;
+  color: #8B8B8B;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.about-project__frontend {
+  margin: 0;
+  position: relative;
+  width: 100%;
+  background: #303030;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  justify-content: center;
+  height: 36px;
+}
+
+.about-project__frontend-title {
+  margin: 0;
+  color: #FFF;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.about-project__frontend-subtitle {
+  margin: 0;
+  position: absolute;
+  top: 50px;
+  color: #8B8B8B;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+}
