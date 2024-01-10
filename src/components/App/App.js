@@ -13,7 +13,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 
 function App() {
   const { pathname } = useLocation();
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   return (
     <div className="app">

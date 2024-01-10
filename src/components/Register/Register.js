@@ -34,7 +34,7 @@ export default function Register(props) {
       <p className="register__title">Добро пожаловать!</p>
       <form className="register-form" onSubmit={handleSubmit}>
         <input
-          id="registeer-name-input"
+          id="register-name-input"
           type="text"
           name="name"
           className="register__name"

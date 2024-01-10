@@ -108,9 +108,7 @@
   line-height: normal;
 }
 
-.login__name{
-
-}
+.login__name {}
 
 .login__link {
   text-decoration: none;
@@ -122,4 +120,48 @@
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+@media screen and (max-width: 830px) {
+  .login__logo {
+    margin-top: 232px;
+  }
+  .login__link {
+    margin-left: 6px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .login {
+    align-items: center;
+    width: calc(100% - 30*2px);
+  }
+
+  .login__logo {
+    margin-top: 56px;
+  }
+
+  .login-form {
+    width: 100%;
+  }
+
+  .login__email {
+    margin-top: 102px;
+  }
+
+  .login__submit {
+    margin-top: 267px;
+  }
+
+  .login__text {
+    color: #8B8B8B;
+    font-size: 12px;
+    margin-top: 14px;
+  }
+
+  .login__link {
+    color: #4285F4;
+    font-size: 12px;
+    margin-left: 7px;
+  }
 }

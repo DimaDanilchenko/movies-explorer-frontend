@@ -24,16 +24,16 @@
   background-color: #DADADA;
 }
 
-.about-project__about-project {
+.about-project__stages-project {
   margin-top: 70px;
   display: flex;
   flex-direction: row;
   column-gap: 40px;
 }
 
-.about-project__about-inlude {}
+.about-project__about-include {}
 
-.about-project__about-inlude-title {
+.about-project__about-include-title {
   margin: 0;
   color: #FFF;
   font-family: Inter;
@@ -44,7 +44,7 @@
   letter-spacing: -0.8px;
 }
 
-.about-project__about-inlude-subtitle {
+.about-project__about-include-subtitle {
   margin: 0;
   margin-top: 26px;
   color: #FFF;
@@ -132,4 +132,71 @@
   font-style: normal;
   font-weight: 500;
   line-height: 17px;
+}
+
+@media screen and (max-width: 830px) {
+  .about-project__time-project {
+    margin-bottom: 121px;
+  }
+  .about-project {
+    width: calc(100% - 50*2px);
+  }
+  .about-project__stages-project {
+    column-gap: 30px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .about-project__title {
+    margin-top: 70px;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.72px;
+  }
+
+  .about-project {
+    width: calc(100% - 18*2px);
+  }
+
+  .about-project__line {
+    margin-top: 28px;
+  }
+
+  .about-project__stages-project {
+    flex-direction: column;
+    margin-top: 60px;
+    row-gap: 56px;
+  }
+
+  .about-project__about-include-title {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.72px;
+  }
+
+  .about-project__about-include-subtitle {
+    margin-top: 16px;
+  }
+
+  .about-project__backend {
+    width: 100px;
+  }
+
+  .about-project__backend-title,
+  .about-project__backend-subtitle,
+  .about-project__frontend-title,
+  .about-project__frontend-subtitle {
+    font-size: 11px;
+  }
+  .about-project__time-project{
+    margin-bottom: 60px;
+  }
 }

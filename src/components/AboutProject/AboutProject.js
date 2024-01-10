@@ -3,17 +3,17 @@ import './AboutProject.css';
 
 export default function AboutProject() {
   return (
-    <div className='about-project'>
+    <div id='project' className='about-project'>
       <p className="about-project__title">О проекте</p>
       <div className="about-project__line"></div>
-      <div className="about-project__about-project">
-        <div className="about-project__about-inlude">
-          <p className="about-project__about-inlude-title">Дипломный проект включал 5 этапов</p>
-          <p className="about-project__about-inlude-subtitle">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
+      <div className="about-project__stages-project">
+        <div className="about-project__about-include">
+          <p className="about-project__about-include-title">Дипломный проект включал 5 этапов</p>
+          <p className="about-project__about-include-subtitle">Составление плана, работу над бэкендом, вёрстку, добавление функциональности и финальные доработки.</p>
         </div>
         <div className="about-project__about-include">
-          <p className="about-project__about-inlude-title">На выполнение диплома ушло 5 недель</p>
-          <p className="about-project__about-inlude-subtitle">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
+          <p className="about-project__about-include-title">На выполнение диплома ушло 5 недель</p>
+          <p className="about-project__about-include-subtitle">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.</p>
         </div>
       </div>
       <div className="about-project__time-project">

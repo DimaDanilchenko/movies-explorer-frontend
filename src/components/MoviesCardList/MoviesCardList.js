@@ -2,7 +2,6 @@ import React from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { useEffect, useState } from 'react';
-import movie from "../../images/movie1.png";
 
 export default function MoviesCardList() {
   const [movies, setMovies] = useState([
@@ -50,6 +49,9 @@ export default function MoviesCardList() {
     />
   ))
   return (
-    <section className="card-list">{moviesElements}</section>
+    <section className="cards">
+      <div className="card-list">{moviesElements}</div>
+      <button className="card-list__still">Ещё</button>
+    </section>
   )
 }

@@ -2,6 +2,8 @@ import React from 'react'
 
 export default function SavedMovies() {
   return (
-    <div>SavedMovies</div>
+    <div className='saved-movies'>
+      Сохраненные фильмы
+    </div>
   )
 }

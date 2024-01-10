@@ -99,8 +99,26 @@
 
 .search-form__line{
   height: 1px;
+  margin: 0 auto;
   width: calc(100% - 70*2px);
   background-color: #424242;
   margin-top: 40px;
   margin-bottom: 10px;
+}
+
+@media screen and (max-width: 830px) {
+  .search-form {
+    width: calc(100% - 30*2px);
+  }
+  .toggle {
+    margin-top: 41px;
+  }
+  .search-form__line{
+    width: 100%;
+  }
+}
+@media screen and (max-width: 530px) {
+  .search-form {
+    width: calc(100% - 14*2px);
+  }
 }

@@ -31,6 +31,7 @@
   margin-bottom: 30px;
 }
 
+
 .promo__button {
   margin: 0;
   padding: 10px 17px;
@@ -43,8 +44,51 @@
   font-style: normal;
   font-weight: 500;
   line-height: 16px;
+  text-decoration: none;
 }
 
-.promo__button:hover{
+.promo__button:hover {
   cursor: pointer;
+}
+
+@media screen and (max-width: 830px) {
+  .promo {
+    width: calc(100% - 20*2px);
+  }
+
+  .promo__buttons {
+    margin-top: 314px;
+  }
+
+  .promo__title {
+    margin-top: 350px;
+    max-width: 680px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .promo {
+    width: calc(100% - 14*2px);
+  }
+
+  .promo__title {
+    margin-top: 220px;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 29px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 37px;
+    letter-spacing: -1.16px;
+  }
+  .promo__buttons {
+    margin-top: 212px;
+    margin-bottom: 17px;
+    column-gap: 6px;
+  }
+  .promo__button{
+    font-size: 10px;
+  }
+
 }

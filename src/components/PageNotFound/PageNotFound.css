@@ -41,3 +41,25 @@
   font-weight: 400;
   line-height: normal;
 }
+
+@media screen and (max-width: 830px) {
+  .page-not-found__title {
+    margin-top: 408px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .page-not-found__title {
+    width: calc(100% - 10*2px);
+    color: #FFF;
+    font-size: 80px;
+    margin-top: 329px;
+  }
+  .page-not-found__subtitle{
+    margin-top: 10px;
+  }
+  .page-not-found__link{
+    text-decoration: none;
+    margin-top: 284px;
+  }
+}

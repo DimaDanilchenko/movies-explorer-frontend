@@ -121,3 +121,52 @@
   font-weight: 400;
   line-height: normal;
 }
+
+@media screen and (max-width: 830px) {
+  .register__logo {
+    margin-top: 232px;
+  }
+
+  .register__submit {
+    margin-top: 91px;
+  }
+
+  .register__link {
+    margin-left: 6px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .register {
+    align-items: center;
+    width: calc(100% - 30*2px);
+  }
+
+  .register__logo {
+    margin-top: 56px;
+  }
+
+  .register-form {
+    width: 100%;
+  }
+
+  .register__name {
+    margin-top: 102px;
+  }
+
+  .register__submit {
+    margin-top: 179px;
+  }
+
+  .register__text {
+    color: #8B8B8B;
+    font-size: 12px;
+
+  }
+
+  .register__link {
+    color: #4285F4;
+    font-size: 12px;
+    margin-left: 7px;
+  }
+}

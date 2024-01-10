@@ -20,7 +20,6 @@ export default function Portfolio() {
         <Link className="portfolio__link" to='' >Одностраничное приложение</Link>
         <Link className="portfolio__image"></Link>
       </div>
-      <div className="portfolio__line"></div>
     </div>
   )
 }
