@@ -30,7 +30,7 @@ export default function Register(props) {
   }
   return (
     <div className='register'>
-      <img className="register__logo" src={registerLogo} alt="Логотип" />
+      <Link className="register__logo" to='/' />
       <p className="register__title">Добро пожаловать!</p>
       <form className="register-form" onSubmit={handleSubmit}>
         <input

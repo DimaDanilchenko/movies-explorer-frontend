@@ -7,18 +7,18 @@ export default function Portfolio() {
     <div className='portfolio'>
       <p className="portfolio__title">Портфолио</p>
       <div className="portfolio__links">
-        <Link className="portfolio__link" to='' >Статичный сайт</Link>
-        <Link className="portfolio__image"></Link>
+        <Link className="portfolio__link" to='' target="_blank">Статичный сайт</Link>
+        <Link className="portfolio__image" target="_blank"></Link>
       </div>
       <div className="portfolio__line"></div>
       <div className="portfolio__links">
-        <Link className="portfolio__link" to='' >Адаптивный сайт</Link>
-        <Link className="portfolio__image"></Link>
+        <Link className="portfolio__link" to='' target="_blank">Адаптивный сайт</Link>
+        <Link className="portfolio__image" target="_blank"></Link>
       </div>
       <div className="portfolio__line"></div>
       <div className="portfolio__links">
-        <Link className="portfolio__link" to='' >Одностраничное приложение</Link>
-        <Link className="portfolio__image"></Link>
+        <Link className="portfolio__link" to='' target="_blank" >Одностраничное приложение</Link>
+        <Link className="portfolio__image" target="_blank"></Link>
       </div>
     </div>
   )

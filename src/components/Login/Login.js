@@ -24,7 +24,7 @@ export default function Login(props) {
   }
   return (
     <div className='login'>
-      <img className="login__logo" src={loginLogo} alt="Логотип" />
+      <Link className="login__logo" to='/' />
       <p className="login__title">Рады видеть!</p>
       <form className="login-form" onSubmit={handleSubmit}>
         <input
