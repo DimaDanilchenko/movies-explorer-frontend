@@ -27,23 +27,23 @@ export default function Login(props) {
       <Link className="login__logo" to='/' />
       <p className="login__title">Рады видеть!</p>
       <form className="login-form" onSubmit={handleSubmit}>
+      <label className="login__label">E-mail</label>
         <input
           id="login-email-input"
           type="email"
           name="email"
           className="login__email"
-          placeholder="Email:"
           onChange={handleEmailChange}
           value={email}
           required=""
         />
         <span className="login__name-error" />
+        <label className="login__label">Пароль</label>
         <input
           id="login-password-input"
           type="password"
           name="password"
           className="login__password"
-          placeholder="Пароль:"
           onChange={handlePasswordChange}
           value={password}
           required=""

@@ -1,6 +1,7 @@
 .about-project {
   display: flex;
   flex-direction: column;
+  max-width: 1280px;
   width: calc(100% - 70*2px);
   margin: 0 auto;
   background: #202020;
@@ -10,12 +11,14 @@
   margin: 0;
   margin-top: 110px;
   max-width: 600px;
+
   color: #FFF;
-  font-family: 'Inter', 'Arial', sans-serif;
-  font-size: 14px;
+  font-size: 22px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px;
+  line-height: normal;
+  letter-spacing: -0.88px;
+  font-family: 'Inter', 'Arial', sans-serif;
 }
 
 .about-project__line {
@@ -28,7 +31,7 @@
   margin-top: 70px;
   display: flex;
   flex-direction: row;
-  column-gap: 40px;
+  column-gap: 45px;
 }
 
 .about-project__about-include {}
@@ -64,7 +67,8 @@
 
 .about-project__backend {
   background: #3DDC84;
-  width: 228px;
+  box-sizing: border-box;
+  width: 280px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -135,14 +139,33 @@
 }
 
 @media screen and (max-width: 830px) {
+  .about-project__about-include-subtitle {
+    margin-top: 22px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+  }
+
+  .about-project__title {
+    margin-top: 90px;
+  }
+
   .about-project__time-project {
+    margin-top: 90px;
     margin-bottom: 121px;
   }
+
   .about-project {
     width: calc(100% - 50*2px);
   }
+
   .about-project__stages-project {
     column-gap: 30px;
+  }
+
+  .about-project__backend {
+    width: 180px;
   }
 }
 
@@ -184,10 +207,15 @@
 
   .about-project__about-include-subtitle {
     margin-top: 16px;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
   }
 
   .about-project__backend {
-    width: 100px;
+    box-sizing: border-box;
+    width: 148px;
   }
 
   .about-project__backend-title,
@@ -195,8 +223,11 @@
   .about-project__frontend-title,
   .about-project__frontend-subtitle {
     font-size: 11px;
+    top: 44px;
   }
-  .about-project__time-project{
-    margin-bottom: 60px;
+
+  .about-project__time-project {
+    margin-top: 60px;
+    margin-bottom: 90px;
   }
 }

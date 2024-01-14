@@ -33,12 +33,12 @@ export default function Register(props) {
       <Link className="register__logo" to='/' />
       <p className="register__title">Добро пожаловать!</p>
       <form className="register-form" onSubmit={handleSubmit}>
+        <label className="register__label">Имя</label>
         <input
           id="register-name-input"
           type="text"
           name="name"
           className="register__name"
-          placeholder="Имя:"
           onChange={handleNameChange}
           value={name}
           required=""
@@ -46,23 +46,23 @@ export default function Register(props) {
           maxLength={40}
         />
         <span className="register__name-error" />
+        <label className="register__label">E-mail</label>
         <input
           id="registeer-email-input"
           type="email"
           name="email"
           className="register__email"
-          placeholder="Email:"
           onChange={handleEmailChange}
           value={email}
           required=""
         />
         <span className="register__name-error" />
+        <label className="register__label">Пароль</label>
         <input
           id="registeer-password-input"
           type="password"
           name="password"
           className="register__password"
-          placeholder="Пароль:"
           onChange={handlePasswordChange}
           value={password}
           required=""

@@ -104,17 +104,17 @@
 
 @media screen and (max-width: 830px) {
   .profile__title{
-    margin-top: 236px;
+    margin-top: 254px;
   }
   .profile__name-data {
     margin-top: 96px;
   }
   .profile__redaction{
-    margin-top: 210px;
+    margin-top: 208px;
   }
 }
 
-@media screen and (max-width: 830px) {
+@media screen and (max-width: 530px) {
   .profile__title{
     margin-top: 70px;
   }

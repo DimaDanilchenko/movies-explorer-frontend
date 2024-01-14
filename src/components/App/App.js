@@ -17,7 +17,8 @@ function App() {
 
   return (
     <div className="app">
-      {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' || pathname === '/profile' ? <Header loggedIn={loggedIn} /> : ''}
+      {pathname === '/' || pathname === '/profile' ? <Header loggedIn={loggedIn} /> : ''}
+      {pathname === '/movies' || pathname === '/saved-movies' ? <Header loggedIn={!loggedIn} /> : ''}
       <Routes>
         <Route
           path="/"

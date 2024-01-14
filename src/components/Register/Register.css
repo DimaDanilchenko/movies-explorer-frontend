@@ -16,6 +16,7 @@
 .register__title {
   margin: 0;
   margin-top: 40px;
+  margin-bottom: 20px;
   color: #FFF;
   font-family: 'Inter', 'Arial', sans-serif;
   font-size: 24px;
@@ -31,10 +32,23 @@
   width: 396px;
 }
 
+.register__label {
+  margin: 0;
+  margin-top: 20px;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8B8B8B;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .register__name {
   margin: 0;
   padding: 15px;
-  margin-top: 62px;
+  margin-top: 10px;
   border: none;
   border-radius: 8px;
   background: #2F2F2F;
@@ -49,7 +63,7 @@
 .register__email {
   margin: 0;
   padding: 15px;
-  margin-top: 42px;
+  margin-top: 10px;
   border: none;
   border-radius: 8px;
   background: #2F2F2F;
@@ -65,7 +79,7 @@
 .register__password {
   margin: 0;
   padding: 15px;
-  margin-top: 42px;
+  margin-top: 10px;
   border: none;
   border-radius: 8px;
   background: #2F2F2F;
@@ -143,6 +157,11 @@
     width: calc(100% - 30*2px);
   }
 
+  .register__title {
+    margin-top: 50px;
+    margin-bottom: 60px;
+  }
+
   .register__logo {
     margin-top: 56px;
   }
@@ -152,16 +171,21 @@
   }
 
   .register__name {
-    margin-top: 102px;
+    margin-top: 10px;
   }
 
   .register__submit {
-    margin-top: 179px;
+    margin-top: 176px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
   }
 
   .register__text {
     color: #8B8B8B;
     font-size: 12px;
+    margin-top: 12px;
 
   }
 
