@@ -150,6 +150,14 @@
     width: calc(100% - 30*2px);
   }
 
+  .login__title {
+    margin-top: 50px;
+  }
+
+  .login__label:first-child {
+    margin-top: 60px;
+  }
+
   .login__logo {
     margin-top: 56px;
   }
@@ -159,11 +167,15 @@
   }
 
   .login__email {
-    margin-top: 102px;
+    margin-top: 0;
   }
 
   .login__submit {
-    margin-top: 267px;
+    margin-top: 264px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
   }
 
   .login__text {

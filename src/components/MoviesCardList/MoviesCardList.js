@@ -5,7 +5,7 @@ import FilmLogo from '../../images/movie1.png';
 
 import { useEffect, useState } from 'react';
 
-export default function MoviesCardList() {
+export default function MoviesCardList(props) {
   const [movies, setMovies] = useState([
     {
       image: {
@@ -62,6 +62,7 @@ export default function MoviesCardList() {
   const moviesElements = movies.map((movie) => (
     <MoviesCard
       movie={movie}
+      key={props.id}
     />
   ))
   return (
