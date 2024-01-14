@@ -62,7 +62,6 @@ export default function MoviesCardList(props) {
   const moviesElements = movies.map((movie) => (
     <MoviesCard
       movie={movie}
-      key={props.id}
     />
   ))
   return (

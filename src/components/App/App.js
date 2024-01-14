@@ -13,18 +13,18 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 
 function App() {
   const { pathname } = useLocation();
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [userInfo, setUserInfo] = useState('');
 
   return (
     <div className="app">
-      {pathname === '/' || pathname === '/profile' ? <Header loggedIn={loggedIn} /> : ''}
-      {pathname === '/movies' || pathname === '/saved-movies' ? <Header loggedIn={!loggedIn} /> : ''}
       <Routes>
         <Route
           path="/"
           element={
-            <Main></Main>}
-          loggedIn={loggedIn}
+            <Main
+              loggedIn={loggedIn}
+            />}
         />
         <Route path="/sign-up" element={
           <Register />}
@@ -33,7 +33,7 @@ function App() {
           <Login />}
         />
         <Route path="/profile" element={
-          <Profile loggedIn={loggedIn} />}
+          <Profile loggedIn={loggedIn} userInfo={userInfo} />}
         />
         <Route path="/movies" element={
           <Movies loggedIn={loggedIn} />}

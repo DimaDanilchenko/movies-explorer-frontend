@@ -1,17 +1,21 @@
 import React from 'react';
 import './Register.css';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import registerLogo from "../../images/logo-header.svg";
 
-export default function Register(props) {
+export default function Register({ loggedIn }) {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(e) {
+  function handleSubmit(e, formValue) {
     e.preventDefault();
-    props.onRegister(email, password);
+
+    const { name, email, password } = formValue;
+    
     setEmail("");
     setPassword("");
     setName("");
@@ -33,43 +37,43 @@ export default function Register(props) {
       <Link className="register__logo" to='/' />
       <p className="register__title">Добро пожаловать!</p>
       <form className="register-form" onSubmit={handleSubmit}>
-        <label className="register__label">Имя</label>
+        <label className="register-form__label">Имя</label>
         <input
           id="register-name-input"
           type="text"
           name="name"
-          className="register__name"
+          className="register-form__name"
           onChange={handleNameChange}
           value={name}
           required=""
           minLength={2}
           maxLength={40}
         />
-        <span className="register__name-error" />
-        <label className="register__label">E-mail</label>
+        <span className="register-form__name-error" />
+        <label className="register-form__label">E-mail</label>
         <input
           id="registeer-email-input"
           type="email"
           name="email"
-          className="register__email"
+          className="register-form__email"
           onChange={handleEmailChange}
           value={email}
           required=""
         />
-        <span className="register__name-error" />
-        <label className="register__label">Пароль</label>
+        <span className="register-form__name-error" />
+        <label className="register-form__label">Пароль</label>
         <input
           id="registeer-password-input"
           type="password"
           name="password"
-          className="register__password"
+          className="register-form__password"
           onChange={handlePasswordChange}
           value={password}
           required=""
         />
-        <span className="register__name-error" />
-        <input type="submit" value="Зарегистрироваться" className="register__submit" />
-        <p className="register__text">Уже зарегистрированы? <Link to="/sign-in" className="register__link">Войти</Link></p>
+        <span className="register-form__name-error" />
+        <input type="submit" value="Зарегистрироваться" className="register-form__submit" />
+        <p className="register-form__text">Уже зарегистрированы? <Link to="/sign-in" className="register-form__link">Войти</Link></p>
       </form>
     </div>
   )

@@ -27,7 +27,7 @@ export default function Login(props) {
       <Link className="login__logo" to='/' />
       <p className="login__title">Рады видеть!</p>
       <form className="login-form" onSubmit={handleSubmit}>
-      <label className="login__label">E-mail</label>
+      <label className="login-form__label">E-mail</label>
         <input
           id="login-email-input"
           type="email"

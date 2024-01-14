@@ -1,47 +1,61 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { React, useState } from 'react';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
+import Navigation from '../Navigation/Navigation';
 import './Header.css';
-import headerLogo from "../../images/logo-header.svg";
-import headerLogoProfile from "../../images/profile-header.svg";
-import headerBurgerLogo from "../../images/menu-burger.svg";
+import headerLogo from '../../images/logo-header.svg';
 
-export default function Header(props) {
+const Header = ({ isLogin }) => {
   const location = useLocation();
-  const [burgerMenu, setBurgerMenu] = useState(false); // состояние меню
-  const handleToggleMenu = () => setBurgerMenu(!burgerMenu);
+  const navigate = useNavigate();
 
-  const path = location.pathname === "/sign-in" ? "/sign-up" : "/sign-in";
+  const [navigationVisible, setNavigationVisible] = useState(false);
+
+  const openNavMenu = function() {
+    setNavigationVisible(true);
+  }
+
+  const closeNavMenu = function() {
+    setNavigationVisible(false);
+  }
+
   return (
-    <div className="header">
-      <div className="burger-menu">
-        <Link className="burger-menu__logo" src={headerLogo} to='/' />
-        <button className="burger-menu__image" onClick={handleToggleMenu}></button>
-        <div className={`burger-menu__container ${burgerMenu ? 'burger-menu__container_visible' : ''}`}>
-          <div className="burger-menu__links">
-            <Link className="burger-menu__link" to="/" >Главная</Link>
-            <Link className="burger-menu__link" to="/movies" >Фильмы</Link>
-            <Link className="burger-menu__link" to="/saved-movies" >Сохранённые фильмы</Link>
-            <Link to="/profile" className="burger-menu__logo-profile" />
-          </div>
+    <>
+      <header className='header'>
+        <div className="header__container">
+          <img className='header__logo' src={headerLogo} alt='Логотип хэдера' onClick={() => navigate('/')}></img>
+          {location.pathname === '/' ? (
+            !isLogin ? (
+              <nav className='header__menu'>
+              <button className='header__button header__button_bg_transparent' onClick={() => navigate('/sign-up')}>Регистрация</button>
+              <button className='header__button' onClick={() => navigate('/sign-in')}>Войти</button>
+            </nav>
+            ) :
+            (
+              <nav className='header__menu'>
+                <Link className='header__link' to='/movies'>Фильмы</Link>
+                <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
+                <Link className='header__link' to='/profile'>Аккаунт</Link>
+              </nav>
+            )
+          ) :
+          (
+            <>
+              <button
+                className='header__button_burger' 
+                onClick={openNavMenu}
+              ></button>
+              <div className='header__links'>
+                <Link className='header__link header__link_fw_bold' to='/movies'>Фильмы</Link>
+                <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
+              </div>
+              <Link className='header__button_account' to='/profile'>Аккаунт</Link>
+            </>
+          )}
         </div>
-      </div>
-      <div className='header-menu'>
-        <Link className="header-menu__logo" src={headerLogo} to='/' />
-        {props.loggedIn ? (
-          <>
-            <div className="header__links-in">
-              <Link className="header__link" to="/movies" >Фильмы</Link>
-              <Link className="header__link" to="/saved-movies" >Сохранённые фильмы</Link>
-            </div>
-            <Link src={headerLogoProfile} to="/profile" className="header__logo-profile" />
-          </>
-        ) : (
-          <div className="header__links">
-            <Link className="header__link-reg" to="/sign-up" >Регистрация</Link>
-            <Link className="header__link-in" to="/sign-in" >Войти</Link>
-          </div>
-        )}
-      </div>
-    </div>
-  )
+      </header>
+      <Navigation closeNavMenu={closeNavMenu} navigationVisible={navigationVisible} />
+    </>
+  );
 }
+
+export default Header;
