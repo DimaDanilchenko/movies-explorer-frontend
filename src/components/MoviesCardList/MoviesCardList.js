@@ -3,7 +3,7 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import FilmLogo from '../../images/movie1.png';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 export default function MoviesCardList(props) {
   const [movies, setMovies] = useState([
@@ -13,6 +13,7 @@ export default function MoviesCardList(props) {
       },
       name: '33 слова о дизайне',
       time: '1ч 17мин',
+      id: 1,
     },
     {
       image: {
@@ -20,6 +21,7 @@ export default function MoviesCardList(props) {
       },
       name: '33 слова о дизайне',
       time: '1ч 17мин',
+      id: 2,
     },
     {
       image: {
@@ -27,6 +29,7 @@ export default function MoviesCardList(props) {
       },
       name: '33 слова о дизайне',
       time: '1ч 17мин',
+      id: 3,
     },
     {
       image: {
@@ -62,6 +65,7 @@ export default function MoviesCardList(props) {
   const moviesElements = movies.map((movie) => (
     <MoviesCard
       movie={movie}
+      key={movie.id}
     />
   ))
   return (

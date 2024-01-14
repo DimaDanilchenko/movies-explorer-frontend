@@ -1,6 +1,5 @@
 import React from 'react'
 import './Promo.css';
-import { Link } from 'react-router-dom';
 
 export default function Promo() {
   return (
