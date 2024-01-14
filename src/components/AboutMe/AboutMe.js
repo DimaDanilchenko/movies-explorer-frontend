@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 export default function AboutMe() {
   return (
-    <div className='about-me'>
+    <div className='about-me' id="about">
       <p className="about-me__title">Студент</p>
       <div className="about-me___line"></div>
       <div className="about-me__student">
