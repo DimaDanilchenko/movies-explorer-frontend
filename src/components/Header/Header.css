@@ -1,13 +1,23 @@
 .header {
   background-color: #202020;
-  font-family: 'inter', sans-serif;
-  padding: 18px 14px;
+  font-family: 'Inter', 'Arial', sans-serif;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .header__container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: calc(100% - 70*2px);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.header__logo{
+  margin-top: 18px;
+  margin-bottom: 18px;
 }
 
 .header__menu {
@@ -70,15 +80,24 @@
   display: none;
 }
 
+@media screen and (min-width: 320px) {
+  .header__container{
+    width: calc(100% - 14*2px);
+  }
+}
+
 @media screen and (min-width: 425px) {
+  .header__container{
+    width: calc(100% - 30*2px);
+  }
   .header__button {
     font-size: 12px;
   }
 }
 
 @media screen and (min-width: 768px) {
-  .header {
-    padding: 18px 30px;
+  .header__container{
+    width: calc(100% - 30*2px);
   }
 
   .header__logo:hover {
@@ -124,13 +143,10 @@
 }
 
 @media screen and (min-width: 1280px) {
-  .header {
-    padding: 18px 70px;
-  }
-
   .header__container {
     max-width: 1280px;
     margin: 0 auto;
+    width: calc(100% - 70*2px);
   }
 
   .header__button:hover{

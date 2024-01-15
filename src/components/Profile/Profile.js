@@ -7,7 +7,7 @@ export default function Profile({ loggedIn, userInfo }) {
   return (
     <>
     <Header />
-    <div className='profile'>
+    <main className='profile'>
       <p className="profile__title">Привет, {userInfo.name}!</p>
       <div className="profile__name-data">
         <p className="profile__name-title">Имя</p>
@@ -18,9 +18,9 @@ export default function Profile({ loggedIn, userInfo }) {
         <p className="profile__email-title">E-mail</p>
         <p className="profile__email-subtitle">pochta@yandex.ru {userInfo.email}</p>
       </div>
-      <button className="profile__redaction">Редактировать</button>
+      <button type="button" className="profile__redaction">Редактировать</button>
       <Link className="profile__out" to="/" onClick={userInfo.onSignOut}>Выйти из аккаунта</Link>
-    </div>
+    </main>
     </>
 
   )

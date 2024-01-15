@@ -33,7 +33,7 @@ export default function Register({ loggedIn }) {
     setPassword(e.target.value);
   }
   return (
-    <div className='register'>
+    <main className='register'>
       <Link className="register__logo" to='/' />
       <p className="register__title">Добро пожаловать!</p>
       <form className="register-form" onSubmit={handleSubmit}>
@@ -75,6 +75,6 @@ export default function Register({ loggedIn }) {
         <input type="submit" value="Зарегистрироваться" className="register-form__submit" />
         <p className="register-form__text">Уже зарегистрированы? <Link to="/sign-in" className="register-form__link">Войти</Link></p>
       </form>
-    </div>
+    </main>
   )
 }

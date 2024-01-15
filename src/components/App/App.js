@@ -18,6 +18,7 @@ function App() {
 
   return (
     <div className="app">
+      {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ? <Header /> : ''}
       <Routes>
         <Route
           path="/"

@@ -6,11 +6,10 @@ import Header from '../Header/Header';
 
 export default function SavedMovies({loggedIn}) {
   return (
-    <div className='saved-movies'>
-      <Header loggedIn={loggedIn}/>
+    <main className='saved-movies'>
       <SearchForm></SearchForm>
       <Preloader></Preloader>
       <MoviesCardList></MoviesCardList>
-    </div>
+    </main>
   )
 }

@@ -3,7 +3,7 @@ import './Techs.css';
 
 export default function Techs() {
   return (
-    <div className='techs' id="techs">
+    <section className='techs' id="techs">
       <div className="tech__container">
         <p className="techs__title">Технологии</p>
         <div className="techs__line"></div>
@@ -19,6 +19,6 @@ export default function Techs() {
           <li className="techs__technology">mongoDB</li>
         </ul>
       </div>
-    </div>
+    </section>
   )
 }

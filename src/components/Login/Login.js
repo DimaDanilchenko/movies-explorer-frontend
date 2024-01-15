@@ -23,7 +23,7 @@ export default function Login(props) {
     setPassword(e.target.value);
   }
   return (
-    <div className='login'>
+    <main className='login'>
       <Link className="login__logo" to='/' />
       <p className="login__title">Рады видеть!</p>
       <form className="login-form" onSubmit={handleSubmit}>
@@ -38,7 +38,7 @@ export default function Login(props) {
           required=""
         />
         <span className="login__name-error" />
-        <label className="login__label">Пароль</label>
+        <label className="login-form__label">Пароль</label>
         <input
           id="login-password-input"
           type="password"
@@ -52,6 +52,6 @@ export default function Login(props) {
         <input type="submit" value="Войти" className="login__submit" />
         <p className="login__text">Ещё не зарегистрированы? <Link to="/sign-up" className="login__link">Регистрация</Link></p>
       </form>
-    </div>
+    </main>
   )
 }

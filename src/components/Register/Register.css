@@ -92,7 +92,7 @@
 }
 
 .register-form__submit {
-  margin-top: 104px;
+  margin-top: 88px;
   height: 45px;
   border: none;
   border-radius: 3px;
@@ -112,7 +112,7 @@
 
 .register-form__text {
   margin: 0;
-  margin-bottom: 70px;
+  margin-bottom: 236px;
   margin-top: 16px;
   color: #8B8B8B;
   text-align: center;
@@ -141,7 +141,7 @@
   }
 
   .register-form__submit {
-    margin-top: 91px;
+    margin-top: 88px;
   }
 
   .register-form__link {

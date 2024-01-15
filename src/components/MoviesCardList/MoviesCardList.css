@@ -1,3 +1,7 @@
+.cards{
+  max-width: 1280px;
+  margin: 0 auto;
+}
 .card-list {
   max-width: calc(100% - 70*2px);
   margin: 0 auto;
@@ -5,8 +9,12 @@
   display: grid;
   justify-items: center;
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  row-gap: 60px;
-  column-gap: 20px
+  row-gap: 58px;
+  column-gap: 20px;
+}
+
+.cards__container{
+
 }
 
 .card-list__still {
@@ -42,8 +50,8 @@
     grid-template-columns: repeat(auto-fill, minmax(339px, 1fr));
   }
   .card-list__still {
-    margin-top: 50px;
-    margin-bottom: 80px;
+    margin-top: 60px;
+    margin-bottom: 18px;
   }
 }
 

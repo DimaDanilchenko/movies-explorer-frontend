@@ -1,11 +1,24 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-export default function MoviesCard({ movie }) {
+export default function MoviesCard({ movie, isSaved }) {
+  const location = useLocation();
+  const isMainPage = location.pathname === '/movies' || location.pathname === '/saved-movies';
   return (
     <div className='movie'>
-      <button type="button" className='movie__save' />
+      {
+        isMainPage ? isSaved ? (
+          <div className='movie__save movies-card__button_saved_yes'></div>
+        ) :
+          (
+            <button type='button' className='movie__save movies-card__button_saved_no' onClick={() => { }}></button>
+          ) :
+          (
+            <button type='button' className='movie__save movies-card__button_delete'></button>
+          )
+      }
       <img alt={movie.name} className="movie__image" src={movie.image.url} />
       <div className="movie__data">
         <h2 className="movie__name">{movie.name}</h2>

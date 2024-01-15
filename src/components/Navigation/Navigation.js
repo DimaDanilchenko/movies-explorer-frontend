@@ -10,7 +10,7 @@ const Navigation = ({ closeNavMenu, navigationVisible }) => {
   return (
     <div className={`navigation ${navigationVisible && 'navigation_open'}`}>
       <div className='navigation__container'>
-        <button className='navigation__close-button' onClick={closeNavMenu} />
+        <button type="button" className='navigation__close-button' onClick={closeNavMenu} />
         <ul className='navigation__links'>
           <li>
             <Link className='navigation__link' to='/'>Главная</Link>

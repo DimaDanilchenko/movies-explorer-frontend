@@ -10,11 +10,11 @@ const Header = ({ isLogin }) => {
 
   const [navigationVisible, setNavigationVisible] = useState(false);
 
-  const openNavMenu = function() {
+  const openNavMenu = function () {
     setNavigationVisible(true);
   }
 
-  const closeNavMenu = function() {
+  const closeNavMenu = function () {
     setNavigationVisible(false);
   }
 
@@ -26,31 +26,32 @@ const Header = ({ isLogin }) => {
           {location.pathname === '/' ? (
             !isLogin ? (
               <nav className='header__menu'>
-              <button className='header__button header__button_bg_transparent' onClick={() => navigate('/sign-up')}>Регистрация</button>
-              <button className='header__button' onClick={() => navigate('/sign-in')}>Войти</button>
-            </nav>
-            ) :
-            (
-              <nav className='header__menu'>
-                <Link className='header__link' to='/movies'>Фильмы</Link>
-                <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
-                <Link className='header__link' to='/profile'>Аккаунт</Link>
+                <button type="button" className='header__button header__button_bg_transparent' onClick={() => navigate('/sign-up')}>Регистрация</button>
+                <button type="button" className='header__button' onClick={() => navigate('/sign-in')}>Войти</button>
               </nav>
-            )
+            ) :
+              (
+                <nav className='header__menu'>
+                  <Link className='header__link' to='/movies'>Фильмы</Link>
+                  <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
+                  <Link className='header__link' to='/profile'>Аккаунт</Link>
+                </nav>
+              )
           ) :
-          (
-            <>
-              <button
-                className='header__button_burger' 
-                onClick={openNavMenu}
-              ></button>
-              <div className='header__links'>
-                <Link className='header__link header__link_fw_bold' to='/movies'>Фильмы</Link>
-                <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
-              </div>
-              <Link className='header__button_account' to='/profile'>Аккаунт</Link>
-            </>
-          )}
+            (
+              <>
+                <button
+                  type="button"
+                  className='header__button_burger'
+                  onClick={openNavMenu}
+                ></button>
+                <div className='header__links'>
+                  <Link className='header__link header__link_fw_bold' to='/movies'>Фильмы</Link>
+                  <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
+                </div>
+                <Link className='header__button_account' to='/profile'>Аккаунт</Link>
+              </>
+            )}
         </div>
       </header>
       <Navigation closeNavMenu={closeNavMenu} navigationVisible={navigationVisible} />

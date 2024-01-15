@@ -12,52 +12,54 @@ export default function MoviesCardList(props) {
         url: FilmLogo,
       },
       name: '33 слова о дизайне',
-      time: '1ч 17мин',
+      time: '1ч 17м',
       id: 1,
+      saved: 'saved'
     },
     {
       image: {
         url: FilmLogo,
       },
       name: '33 слова о дизайне',
-      time: '1ч 17мин',
+      time: '1ч 17м',
       id: 2,
+      saved: 'saved'
     },
     {
       image: {
-        url: FilmLogo,      
+        url: FilmLogo,
       },
       name: '33 слова о дизайне',
-      time: '1ч 17мин',
+      time: '1ч 17м',
       id: 3,
     },
     {
       image: {
-        url: FilmLogo,      
+        url: FilmLogo,
       },
       name: '33 слова о дизайне',
-      time: '1ч 17мин',
+      time: '1ч 17м',
     },
     {
       image: {
-        url: FilmLogo,      
+        url: FilmLogo,
       },
       name: '33 слова о дизайне',
-      time: '1ч 17мин',
+      time: '1ч 17м',
     },
     {
       image: {
-        url: FilmLogo,      
+        url: FilmLogo,
       },
       name: '33 слова о дизайне',
-      time: '1ч 17мин',
+      time: '1ч 17м',
     },
     {
       image: {
-        url: FilmLogo,      
+        url: FilmLogo,
       },
       name: '33 слова о дизайне',
-      time: '1ч 17мин',
+      time: '1ч 17м',
     },
 
   ]);
@@ -66,12 +68,13 @@ export default function MoviesCardList(props) {
     <MoviesCard
       movie={movie}
       key={movie.id}
+      isSaved={movie.saved}
     />
   ))
   return (
     <section className="cards">
-      <div className="card-list">{moviesElements}</div>
-      <button className="card-list__still">Ещё</button>
+        <div className="card-list">{moviesElements}</div>
+        <button type="button" className="card-list__still">Ещё</button>
     </section>
   )
 }

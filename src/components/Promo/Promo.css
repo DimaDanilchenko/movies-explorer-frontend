@@ -1,13 +1,16 @@
 .promo {
-  max-width: 1280px;
-  width: calc(100% - 40*2px);
   margin: 0 auto;
+  width: calc(100% - 40*2px);
   margin-top: 20px;
   border-radius: 10px;
-  background: #272727;
+}
+.promo__container{
+  margin: 0 auto;
+  max-width: 1280px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: #272727;
 }
 
 .promo__title {
@@ -55,7 +58,7 @@
 @media screen and (max-width: 830px) {
   .promo {
     width: calc(100% - 20*2px);
-    margin-top: 40px;
+    margin-top: 20px;
   }
 
   .promo__buttons {

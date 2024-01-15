@@ -9,13 +9,12 @@ import Portfolio from '../Portfolio/Portfolio';
 
 export default function Main({ loggedIn }) {
   return (
-    <div className='main'>
-      <Header loggedIn={loggedIn} />
+    <main className='main'>
       <Promo></Promo>
       <AboutProject></AboutProject>
       <Techs></Techs>
       <AboutMe></AboutMe>
       <Portfolio></Portfolio>
-    </div>
+    </main>
   )
 }

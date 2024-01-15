@@ -9,11 +9,10 @@ import Header from '../Header/Header';
 export default function Movies({ loggedIn }) {
   const currentUser = React.useContext(CurrentUserContext);
   return (
-    <div className='movies'>
-      <Header loggedIn={loggedIn}/>
+    <main className='movies'>
       <SearchForm></SearchForm>
       <Preloader></Preloader>
       <MoviesCardList></MoviesCardList>
-    </div>
+    </main>
   )
 }
