@@ -10,13 +10,13 @@ export default function MoviesCard({ movie, isSaved }) {
     <div className='movie'>
       {
         isMainPage ? isSaved ? (
-          <div className='movie__save movies-card__button'></div>
+          <div className='movie__save movies-save__button'></div>
         ) :
           (
-            <button type='button' className='movie__save movies-card__button_saved_no' onClick={() => { }}></button>
+            <button type='button' className='movie__save movies-save__button_no' onClick={() => { }}></button>
           ) :
           (
-            <button type='button' className='movie__save movies-card__button_delete'></button>
+            <button type='button' className='movie__save movies-save__button_delete'></button>
           )
       }
       <img alt={movie.name} className="movie__image" src={movie.image.url} />

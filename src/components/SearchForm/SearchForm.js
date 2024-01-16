@@ -33,8 +33,8 @@ export default function SearchForm() {
               className='search-form__input-checkbox'
             />
             <span className='checkbox__mark'></span>
-            <p className='search-form__input-span'>Короткометражки</p>
           </label>
+          <p className='search-form__input-span'>Короткометражки</p>
         </div>
         <div className="search-form__line"></div>
       </div>

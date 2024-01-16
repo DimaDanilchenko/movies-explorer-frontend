@@ -21,7 +21,7 @@
   border-radius: 12px;
 }
 
-.movies-card__button{
+.movies-save__button{
   background-color: #EE3465;
   width: 21px;
   height: 21px;
@@ -31,7 +31,7 @@
   background-position: center;
 }
 
-.movies-card__button_saved_no {
+.movies-save__button_no {
   font-size: 10px;
   color: #fff;
   background-color: #313131;
@@ -41,7 +41,7 @@
   min-width: 72px;
 }
 
-.movies-card__button_delete {
+.movies-save__button_delete {
   background-color: #313131;
   width: 21px;
   height: 21px;

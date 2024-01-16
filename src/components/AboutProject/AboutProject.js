@@ -30,7 +30,6 @@ export default function AboutProject() {
           <p className="about-project__frontend-subtitle">Front-end</p>
         </div>
       </div>
-
     </section>
   )
 }
