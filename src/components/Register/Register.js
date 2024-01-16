@@ -44,6 +44,7 @@ export default function Register({ loggedIn }) {
           name="name"
           className="register-form__name"
           onChange={handleNameChange}
+          placeholder='Введите имя'
           value={name}
           required=""
           minLength={2}
@@ -57,6 +58,7 @@ export default function Register({ loggedIn }) {
           name="email"
           className="register-form__email"
           onChange={handleEmailChange}
+          placeholder='Введите адрес'
           value={email}
           required=""
         />
@@ -68,6 +70,7 @@ export default function Register({ loggedIn }) {
           name="password"
           className="register-form__password"
           onChange={handlePasswordChange}
+          placeholder='Введите пароль'
           value={password}
           required=""
         />

@@ -71,7 +71,6 @@
   display: flex;
   flex-direction: row;
   margin-top: 110px;
-  margin-bottom: 141px;
 }
 
 .about-project__backend {
@@ -97,10 +96,16 @@
   line-height: normal;
 }
 
+.about-project__subtitle{
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  margin-bottom: 127px;
+  width: calc(100% - 70*2px);
+}
+
 .about-project__backend-subtitle {
   margin: 0;
-  position: absolute;
-  top: 50px;
   color: #8B8B8B;
   text-align: center;
   font-family: 'Inter', 'Arial', sans-serif;
@@ -108,6 +113,8 @@
   font-style: normal;
   font-weight: 500;
   line-height: 17px;
+  width: 280px;
+  margin-top: 14px;
 }
 
 .about-project__frontend {
@@ -136,8 +143,7 @@
 
 .about-project__frontend-subtitle {
   margin: 0;
-  position: absolute;
-  top: 50px;
+  width: 100%;
   color: #8B8B8B;
   text-align: center;
   font-family: 'Inter', 'Arial', sans-serif;
@@ -145,6 +151,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 17px;
+  margin-top: 14px;
 }
 
 @media screen and (max-width: 830px) {
@@ -156,17 +163,25 @@
     line-height: 18px;
   }
 
+  .about-project__backend-subtitle {
+    width: 180px;
+  }
+
   .about-project__title {
     margin-top: 90px;
     width: calc(100% - 50*2px);
 
   }
+  .about-project__subtitle{
+    margin-bottom: 107px;
+    width: calc(100% - 50*2px);
+  }
 
   .about-project__time-project {
     margin-top: 90px;
-    margin-bottom: 121px;
     width: calc(100% - 50*2px);
   }
+  
 
   .about-project__line {
     width: calc(100% - 50*2px);
@@ -192,6 +207,11 @@
     font-weight: 400;
     line-height: normal;
     letter-spacing: -0.72px;
+    width: calc(100% - 18*2px);
+  }
+
+  .about-project__subtitle{
+    margin-bottom: 107px;
     width: calc(100% - 18*2px);
   }
 
@@ -231,16 +251,21 @@
   }
 
   .about-project__backend-title,
-  .about-project__backend-subtitle,
   .about-project__frontend-title,
   .about-project__frontend-subtitle {
     font-size: 11px;
-    top: 44px;
+  }
+
+  .about-project__backend-subtitle{
+    font-size: 11px;
+    width: 148px;
   }
 
   .about-project__time-project {
     margin-top: 60px;
-    margin-bottom: 90px;
     width: calc(100% - 18*2px);
+  }
+  .about-project__subtitle{
+    margin-bottom: 76px;
   }
 }

@@ -5,12 +5,12 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 export default function MoviesCard({ movie, isSaved }) {
   const location = useLocation();
-  const isMainPage = location.pathname === '/movies' || location.pathname === '/saved-movies';
+  const isMainPage = location.pathname === '/movies';
   return (
     <div className='movie'>
       {
         isMainPage ? isSaved ? (
-          <div className='movie__save movies-card__button_saved_yes'></div>
+          <div className='movie__save movies-card__button'></div>
         ) :
           (
             <button type='button' className='movie__save movies-card__button_saved_no' onClick={() => { }}></button>
