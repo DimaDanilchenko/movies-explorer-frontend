@@ -1,0 +1,7 @@
+.nav-tab {
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 70*2px);
+  margin: 0 auto;
+  background: #202020;
+}

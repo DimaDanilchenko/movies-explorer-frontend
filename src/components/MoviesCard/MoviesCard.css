@@ -1,0 +1,143 @@
+.movie {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  position: relative;
+}
+
+.movie__image {
+  max-width: 360px;
+  height: 201px;
+  object-fit: cover;
+}
+
+.movie__save {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background-image: url('../../images/save3d.svg');
+  width: 72px;
+  height: 21px;
+  border: none;
+  border-radius: 12px;
+}
+
+.movies-save__button{
+  background-color: #EE3465;
+  width: 21px;
+  height: 21px;
+  background-image: url('../../images/checkbox-saved.svg');
+  background-repeat: no-repeat;
+  background-size: 10px;
+  background-position: center;
+}
+
+.movies-save__button_no {
+  font-size: 10px;
+  color: #fff;
+  background-color: #313131;
+  padding: 6px 7px;
+  line-height: 9px;
+  box-sizing: border-box;
+  min-width: 72px;
+}
+
+.movies-save__button_delete {
+  background-color: #313131;
+  width: 21px;
+  height: 21px;
+  background-image: url('../../images/checkbox-delete.svg');
+  background-repeat: no-repeat;
+  background-size: 7px;
+  background-position: center;
+}
+
+.movies-card__button_saved_yes {
+  background-color: #EE3465;
+  width: 21px;
+  height: 21px;
+  background-image: url('../../images/checkbox-saved.svg');
+  background-repeat: no-repeat;
+  background-size: 10px;
+  background-position: center;
+}
+
+.movie__data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.movie__name {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  margin-top: 12px;
+  margin-left: 14px;
+  color: #FFF;
+  width: 250px;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-right: 30px;
+}
+
+.movie__time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  margin-right: 18px;
+  margin-top: 14px;
+  color: #8B8B8B;
+  text-align: center;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 10px;
+  border-radius: 3px;
+  background: #2F2F2F;
+  width: 52px;
+  height: 18px;
+}
+
+@media screen and (max-width: 830px) {
+  .movie__image {
+    max-width: 100%;
+    height: 190px;
+  }
+
+  .movie__name {
+    margin-top: 24px;
+    margin-left: 0;
+  }
+
+  .movie__time {
+    margin-top: 22px;
+    padding: 0;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .movie__image {
+    width: 300px;
+    height: 168px;
+  }
+
+  .movie__save {
+    right: 20px;
+  }
+
+  .movie__name {
+    max-width: 140px;
+    margin-right: 8px;
+  }
+
+  .movie__data {
+    width: 100%;
+    display: flex;
+  }
+}
