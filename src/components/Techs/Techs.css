@@ -2,7 +2,7 @@
   background: #272727;
 }
 
-.tech__container {
+.techs__container {
   display: flex;
   flex-direction: column;
   max-width: 1280px;
