@@ -109,8 +109,8 @@ class Api {
   }
 }
 const api = new Api({
-  //baseUrl: 'http://localhost:3000',
-  baseUrl: 'https://api.dima-dan.nomoredomainsmonster.ru',
+  baseUrl: 'http://localhost:3000',
+  //baseUrl: 'https://api.dima-dan.nomoredomainsmonster.ru',
   headers: {
     'Content-Type': 'application/json'
   }

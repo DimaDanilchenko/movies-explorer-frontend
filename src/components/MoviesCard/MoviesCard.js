@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-export default function MoviesCard({ movie, isSaved }) {
+export default function MoviesCard({movies}) {
   const location = useLocation();
   const isMainPage = location.pathname === '/movies';
+  const isSaved = useState(true);
   return (
     <div className='movie'>
         {
@@ -19,10 +20,10 @@ export default function MoviesCard({ movie, isSaved }) {
               <button type='button' className='movie__save movies-save__button_delete'></button>
             )
         }
-      <img alt={movie.name} className="movie__image" src={movie.image.url} />
+      <img alt={movies.image.name} className="movie__image" src={`https://api.nomoreparties.co/${movies.image.url}`} />
       <div className="movie__data">
-        <h2 className="movie__name">{movie.name}</h2>
-        <p className="movie__time">{movie.time}</p>
+        <h2 className="movie__name">{movies.nameRU}</h2>
+        <p className="movie__time">{movies.duration}</p>
       </div>
     </div>
   )

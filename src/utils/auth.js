@@ -1,5 +1,5 @@
-//export const BASE_URL = "http://localhost:3000";
-export const BASE_URL = 'https://api.dima-dan.nomoredomainsmonster.ru';
+export const BASE_URL = "http://localhost:3000";
+//export const BASE_URL = 'https://api.dima-dan.nomoredomainsmonster.ru';
 
 function handleRes(res) {
   if (res.ok) {
@@ -8,13 +8,13 @@ function handleRes(res) {
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
-export const registerUser = (email, password) => {
+export const registerUser = (email, password, name) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, password, name }),
   }).then(handleRes);
 };
 
@@ -29,7 +29,7 @@ export const loginUser = (email, password) => {
 };
 
 export const tokenCheck = (token) => {
-  return fetch(`${BASE_URL}/users/me`, {
+  return fetch(`${BASE_URL}/profile`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

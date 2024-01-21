@@ -50,7 +50,7 @@ export default function Login(props) {
         />
         <span className="login__name-error" />
         <input type="submit" value="Войти" className="login__submit" />
-        <p className="login__text">Ещё не зарегистрированы? <Link to="/sign-up" className="login__link">Регистрация</Link></p>
+        <p className="login__text">Ещё не зарегистрированы? <Link to="/signup" className="login__link">Регистрация</Link></p>
       </form>
     </main>
   )

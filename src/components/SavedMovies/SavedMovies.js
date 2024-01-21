@@ -4,12 +4,14 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Header from '../Header/Header';
 
-export default function SavedMovies({loggedIn}) {
+export default function SavedMovies({ allMovies }) {
   return (
     <main className='saved-movies'>
       <SearchForm></SearchForm>
       <Preloader></Preloader>
-      <MoviesCardList></MoviesCardList>
+      <MoviesCardList
+        allMovies={allMovies}
+      />
     </main>
   )
 }
