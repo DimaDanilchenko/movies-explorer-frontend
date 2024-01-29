@@ -1,7 +1,8 @@
-.cards{
+.cards {
   max-width: 1280px;
   margin: 0 auto;
 }
+
 .card-list {
   max-width: calc(100% - 70*2px);
   margin: 0 auto;
@@ -13,9 +14,7 @@
   column-gap: 20px;
 }
 
-.cards__container{
-
-}
+.cards__container {}
 
 .card-list__still {
   display: flex;
@@ -38,17 +37,30 @@
   background: none;
 }
 
-.card-list__still{
+.card-list__not-found {
+  color: #fff;
+  margin: 0 0 40px 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+.card-list__still_disabled {
+  opacity: 0;
+}
+
+
+.card-list__still {
   cursor: pointer;
 }
 
 @media screen and (max-width: 830px) {
-  .card-list{
+  .card-list {
     max-width: calc(100% - 30*2px);
     row-gap: 48px;
     column-gap: 30px;
     grid-template-columns: repeat(auto-fill, minmax(339px, 1fr));
   }
+
   .card-list__still {
     margin-top: 60px;
     margin-bottom: 18px;
@@ -56,10 +68,11 @@
 }
 
 @media screen and (max-width: 530px) {
-  .card-list{
+  .card-list {
     max-width: calc(100% - 10*2px);
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   }
+
   .card-list__still {
     width: calc(100% - 40*2px);
     margin-top: 63px;

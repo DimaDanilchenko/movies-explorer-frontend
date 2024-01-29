@@ -37,3 +37,15 @@ export const tokenCheck = (token) => {
     }
   }).then(handleRes);
 };
+
+export const getLoggedUserInfo = () => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'GET',
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  }) 
+  .then(handleRes)
+}

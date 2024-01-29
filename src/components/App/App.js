@@ -11,7 +11,8 @@ import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import api from '../../utils/MainApi';
+import mainApi from '../../utils/MainApi';
+import api from '../../utils/MoviesApi';
 import * as auth from "../../utils/auth";
 
 function App() {
@@ -21,12 +22,13 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [email, setEmail] = useState(null);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [isUserInfoChange, setIsUserInfoChange] = useState(false);
   const [status, setStatus] = useState(false);
-
+  const [savedMovies, setSavedMovies] = useState([]);
   const jwt = localStorage.getItem("jwt");
 
   useEffect(() => {
-    api.getUserProfile(jwt)
+    mainApi.getUserProfile(jwt)
       .then((res) => {
         setCurrentUser(res);
       })
@@ -77,6 +79,7 @@ function App() {
         setStatus(false);
         navigate('/signin', { replace: true });
       });
+      console.log(loggedIn)
   }
 
   function handleRegister(email, password, name) {
@@ -101,6 +104,15 @@ function App() {
     setLoggedIn(false);
   }
 
+  function saveMovie(data){
+    console.log(data);
+    mainApi.addNewCard(data, jwt)
+    .then((newCard) => {
+      setSavedMovies([newCard, ...data]);
+    })
+    .catch(console.error)
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -123,10 +135,12 @@ function App() {
             <Profile loggedIn={loggedIn} currentUser={currentUser} onSignOut={handleSignOut} />}
           />
           <Route path="/movies" element={
-            <Movies loggedIn={loggedIn} />}
+            <Movies loggedIn={loggedIn}
+              saveMovie={saveMovie}
+            />}
           />
           <Route path="/saved-movies" element={
-            <SavedMovies loggedIn={loggedIn} />}
+            <SavedMovies loggedIn={loggedIn} jwt={jwt} />}
           />
           <Route path="*" element={
             <PageNotFound />}

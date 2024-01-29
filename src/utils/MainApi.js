@@ -1,4 +1,4 @@
-class Api {
+class MainApi {
   constructor({ baseUrl, headers }) {
     this._headers = headers;
     this._baseUrl = baseUrl;
@@ -16,99 +16,95 @@ class Api {
   _request(url, options) {
     return fetch(url, options).then(this._handleResponse)
   }
+  // Сохранение фильма
+  saveMovie(movieData) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'POST',
+      credentials: 'include',
+      body: JSON.stringify(movieData)
+    })
+      .then(this._handleResponse)
+  }
+  deleteSavedMovie(movieId) {
+    return fetch(`${this._url}/movies/${movieId}`, {
+      method: 'DELETE',
+      credentials: 'include',
+    })
+      .then(res => {
+        return this._checkStatus(res);
+      })
+  }
 
   // Загрузка информации о пользователе с сервера
-  getUserProfile(token) {
+  getUserProfile(jwt) {
     return fetch(`${this._baseUrl}/profile`, {
       method: 'GET',
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${jwt}`
       }
     })
       .then(this._handleResponse)
   }
 
-
-  // Загрузка карточек с сервера
-  getInitialCards(token) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-    })
-      .then(this._handleResponse)
-  }
-  // Редактирование профиля
-  setUserProfile(name, about, jwt) {
-    return fetch(`${this._baseUrl}/profile`, {
-      method: 'PATCH',
+  getSavedMovies(jwt) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'GET',
       headers: {
         ...this._headers,
         'Authorization': `Bearer ${jwt}`
       },
-      body: JSON.stringify({
-        name,
-        about
-      })
+      credentials: 'include'
     })
       .then(this._handleResponse)
   }
-  //Изменение аватарки
-  setUserAvatar(avatar, token) {
-    return fetch(`${this._baseUrl}/profile/avatar`, {
+
+  // Редактирование профиля
+  updateUser(name, email) {
+    return fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       headers: {
-        ...this._headers,
-        'Authorization': `Bearer ${token}`
+        'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({
-        avatar
-      })
+        name,
+        email
+      }),
     })
       .then(this._handleResponse)
   }
-  //Добавление карточки
-  addNewCard(name, link, token) {
-    return fetch(`${this._baseUrl}/cards`, {
+
+  //Добавление фильма
+  addNewCard(movie, token) {
+    return fetch(`${this._baseUrl}/movies`, {
       method: 'POST',
       headers: {
         ...this._headers,
+        "content-type": "application/json",
         'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({
-        name,
-        link
-      })
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: `https://api.nomoreparties.co/${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        thumbnail: `https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN
+    })
     })
       .then(this._handleResponse)
   }
-  // Удаление карточки
-  removeCard(id, token) {
-    return fetch(`${this._baseUrl}/cards/${id}`, {
-      method: 'DELETE',
-      headers: {
-        ...this._headers,
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(this._handleResponse)
-  }
-  // Постановка, снятие лайка
-  changeLikeCardStatus(id, isLiked, token) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: `${isLiked ? 'PUT' : 'DELETE'}`,
-      headers: {
-        ...this._headers,
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(this._handleResponse)
-  }
+
+
 }
-const api = new Api({
+
+const mainApi = new MainApi({
   baseUrl: 'http://localhost:3000',
   //baseUrl: 'https://api.dima-dan.nomoredomainsmonster.ru',
   headers: {
@@ -116,4 +112,4 @@ const api = new Api({
   }
 });
 
-export default api;
+export default mainApi;
