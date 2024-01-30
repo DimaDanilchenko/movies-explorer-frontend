@@ -4,7 +4,7 @@ import Navigation from '../Navigation/Navigation';
 import './Header.css';
 import headerLogo from '../../images/logo-header.svg';
 
-const Header = ({ loggedIn }) => {
+const Header = ({ isLogin }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -24,20 +24,18 @@ const Header = ({ loggedIn }) => {
         <div className="header__container">
           <img className='header__logo' src={headerLogo} alt='Логотип хэдера' onClick={() => navigate('/')}></img>
           {location.pathname === '/' ? (
-            !loggedIn ? (
+            !isLogin ? (
               <nav className='header__menu'>
-                <button type="button" className='header__button header__button_bg_transparent' onClick={() => navigate('/signup')}>Регистрация</button>
-                <button type="button" className='header__button' onClick={() => navigate('/signin')}>Войти</button>
+                <button type="button" className='header__button header__button_bg_transparent' onClick={() => navigate('/sign-up')}>Регистрация</button>
+                <button type="button" className='header__button' onClick={() => navigate('/sign-in')}>Войти</button>
               </nav>
             ) :
               (
-                <>
-                  <div className='header__links'>
-                    <Link className='header__link header__link_fw_bold' to='/movies'>Фильмы</Link>
-                    <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
-                  </div>
-                  <Link className='header__button_account' to='/profile'>Аккаунт</Link>
-                </>
+                <nav className='header__menu'>
+                  <Link className='header__link' to='/movies'>Фильмы</Link>
+                  <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>
+                  <Link className='header__link' to='/profile'>Аккаунт</Link>
+                </nav>
               )
           ) :
             (

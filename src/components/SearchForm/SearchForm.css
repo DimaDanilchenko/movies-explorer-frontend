@@ -39,9 +39,6 @@
 .search-form__image {
   width: 44px;
   height: 44px;
-  background-image: url('../../images/find-3.svg');
-  border: none;
-  border-radius: 10px;
 }
 
 /* -------------------------*/

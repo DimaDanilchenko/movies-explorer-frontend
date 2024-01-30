@@ -19,7 +19,7 @@ class Api {
 
   // Загрузка информации о пользователе с сервера
   getUserProfile(token) {
-    return fetch(`${this._baseUrl}/profile`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
         ...this._headers,
@@ -43,7 +43,7 @@ class Api {
   }
   // Редактирование профиля
   setUserProfile(name, about, jwt) {
-    return fetch(`${this._baseUrl}/profile`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         ...this._headers,
@@ -58,7 +58,7 @@ class Api {
   }
   //Изменение аватарки
   setUserAvatar(avatar, token) {
-    return fetch(`${this._baseUrl}/profile/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: {
         ...this._headers,
