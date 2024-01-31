@@ -151,17 +151,16 @@ function App() {
             <Login onLogin={handleLogin} />}
           />
           <Route path="/profile" element={
-            <Profile loggedIn={loggedIn} userInfo={userInfo} onSignOut={handleSignOut}/>}
+            <Profile userInfo={userInfo} onSignOut={handleSignOut}/>}
           />
           <Route path="/movies" element={
             <Movies 
-            loggedIn={loggedIn} 
             allMovies={allMovies}
             onMovieSave={handleMovieSave}
             />}
           />
           <Route path="/saved-movies" element={
-            <SavedMovies loggedIn={loggedIn} />}
+            <SavedMovies allMovies={allMovies} />}
           />
           <Route path="*" element={
             <PageNotFound />}
