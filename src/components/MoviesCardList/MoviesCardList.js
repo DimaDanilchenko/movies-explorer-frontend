@@ -3,11 +3,12 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import FilmLogo from '../../images/movie1.png';
 
-export default function MoviesCardList({ allMovies }) {
+export default function MoviesCardList({ allMovies, onMovieSave }) {
 
   const cardElements = allMovies.map((movie) => (
     <MoviesCard
       movie={movie}
+      onMovieSave={onMovieSave}
     />
   ))
   return (

@@ -29,34 +29,30 @@ class Api {
       .then(this._handleResponse)
   }
 
-
-  // Загрузка карточек с сервера
-  getInitialCards(token) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: "GET",
+  //Добавление фильма
+  createMovie(movie) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: "POST",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-    })
-      .then(this._handleResponse)
-  }
-
-  //Добавление карточки
-  addNewCard(name, link, token) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: 'POST',
-      headers: {
-        ...this._headers,
-        'Authorization': `Bearer ${token}`
+        "content-type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`
       },
       body: JSON.stringify({
-        name,
-        link
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: `https://api.nomoreparties.co/${movie.image.url}`,
+        trailerLink: movie.trailerLink,
+        thumbnail: `https://api.nomoreparties.co/${movie.image.formats.thumbnail.url}`,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN
       })
-    })
-      .then(this._handleResponse)
+    }).then(this._handleResponse)
   }
+
   // Удаление карточки
   removeCard(id, token) {
     return fetch(`${this._baseUrl}/cards/${id}`, {
@@ -68,17 +64,7 @@ class Api {
     })
       .then(this._handleResponse)
   }
-  // Постановка, снятие лайка
-  changeLikeCardStatus(id, isLiked, token) {
-    return fetch(`${this._baseUrl}/cards/${id}/likes`, {
-      method: `${isLiked ? 'PUT' : 'DELETE'}`,
-      headers: {
-        ...this._headers,
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(this._handleResponse)
-  }
+
 }
 const api = new Api({
   baseUrl: 'http://localhost:3000',

@@ -12,6 +12,7 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import api from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
+import mainApi from '../../utils/MainApi';
 import * as auth from "../../utils/auth";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
@@ -25,6 +26,10 @@ function App() {
   const [email, setEmail] = useState(null);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [status, setStatus] = useState(false);
+
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [savedMoviesCopy, setSavedMoviesCopy] = useState([]);
+
   const jwt = localStorage.getItem("jwt");
 
   useEffect(() => {
@@ -39,8 +44,6 @@ function App() {
       })
       .catch(console.error)
   }, [])
-
-  console.log(allMovies);
 
   useEffect(() => {
     tokenCheck();
@@ -110,6 +113,17 @@ function App() {
     setLoggedIn(false);
   }
 
+  function handleMovieSave(movie) {
+    console.log(movie);
+    mainApi
+    .createMovie(movie)
+    .then((res) => {
+      setSavedMovies(savedMovies.concat(res));
+      setSavedMoviesCopy(savedMoviesCopy.concat(res));
+    })
+    .catch(console.error)
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -135,6 +149,7 @@ function App() {
             <Movies 
             loggedIn={loggedIn} 
             allMovies={allMovies}
+            onMovieSave={handleMovieSave}
             />}
           />
           <Route path="/saved-movies" element={

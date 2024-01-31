@@ -2,9 +2,14 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
-export default function MoviesCard({ movie, isSaved }) {
+export default function MoviesCard({ movie, isSaved, onMovieSave }) {
   const location = useLocation();
   const isMainPage = location.pathname === '/movies';
+
+  function handleLikeClick(){
+    onMovieSave(movie);
+  }
+
   return (
     <div className='movie'>
       {
@@ -12,7 +17,7 @@ export default function MoviesCard({ movie, isSaved }) {
           <div className='movie__save movies-save__button'></div>
         ) :
           (
-            <button type='button' className='movie__save movies-save__button_no' onClick={() => { }}></button>
+            <button type='button' className='movie__save movies-save__button_no' onClick={handleLikeClick}></button>
           ) :
           (
             <button type='button' className='movie__save movies-save__button_delete'></button>

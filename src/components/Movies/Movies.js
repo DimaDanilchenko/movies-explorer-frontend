@@ -6,7 +6,7 @@ import './Movies.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Header from '../Header/Header';
 
-export default function Movies({ allMovies }) {
+export default function Movies({ allMovies, onMovieSave }) {
   const currentUser = React.useContext(CurrentUserContext);
   return (
     <main className='movies'>
@@ -14,6 +14,7 @@ export default function Movies({ allMovies }) {
       <Preloader></Preloader>
       <MoviesCardList
         allMovies={allMovies}
+        onMovieSave={onMovieSave}
       ></MoviesCardList>
     </main>
   )
