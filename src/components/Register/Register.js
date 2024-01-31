@@ -5,16 +5,15 @@ import { useState } from 'react';
 import { Link } from "react-router-dom";
 import registerLogo from "../../images/logo-header.svg";
 
-export default function Register({ loggedIn }) {
+export default function Register(props) {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSubmit(e, formValue) {
+  function handleSubmit(e) {
     e.preventDefault();
-
-    const { name, email, password } = formValue;
+    props.onRegister(name, email, password);
     
     setEmail("");
     setPassword("");
@@ -76,7 +75,7 @@ export default function Register({ loggedIn }) {
         />
         <span className="register-form__name-error" />
         <input type="submit" value="Зарегистрироваться" className="register-form__submit" />
-        <p className="register-form__text">Уже зарегистрированы? <Link to="/sign-in" className="register-form__link">Войти</Link></p>
+        <p className="register-form__text">Уже зарегистрированы? <Link to="/signin" className="register-form__link">Войти</Link></p>
       </form>
     </main>
   )

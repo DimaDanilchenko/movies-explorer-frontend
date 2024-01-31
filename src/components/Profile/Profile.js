@@ -3,7 +3,7 @@ import './Profile.css';
 import { Link } from 'react-router-dom';
 import Header from '../Header/Header';
 
-export default function Profile({ loggedIn, userInfo }) {
+export default function Profile({ userInfo, onSignOut }) {
   return (
     <>
     <Header />
@@ -19,7 +19,7 @@ export default function Profile({ loggedIn, userInfo }) {
         <p className="profile__email-subtitle">pochta@yandex.ru {userInfo.email}</p>
       </div>
       <button type="button" className="profile__redaction">Редактировать</button>
-      <Link className="profile__out" to="/" onClick={userInfo.onSignOut}>Выйти из аккаунта</Link>
+      <Link className="profile__out" to="/" onClick={onSignOut}>Выйти из аккаунта</Link>
     </main>
     </>
 

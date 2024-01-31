@@ -6,13 +6,15 @@ import './Movies.css';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import Header from '../Header/Header';
 
-export default function Movies({ loggedIn }) {
+export default function Movies({ allMovies }) {
   const currentUser = React.useContext(CurrentUserContext);
   return (
     <main className='movies'>
       <SearchForm></SearchForm>
       <Preloader></Preloader>
-      <MoviesCardList></MoviesCardList>
+      <MoviesCardList
+        allMovies={allMovies}
+      ></MoviesCardList>
     </main>
   )
 }
