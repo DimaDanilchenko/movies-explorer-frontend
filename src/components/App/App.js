@@ -46,6 +46,14 @@ function App() {
   }, [])
 
   useEffect(() => {
+    mainApi
+      .getInitialMovies()
+      .then((res) => {
+        setSavedMovies(savedMovies.concat(res));
+      })
+  }, []);
+
+  useEffect(() => {
     tokenCheck();
   }, []);
 

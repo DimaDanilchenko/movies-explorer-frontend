@@ -29,6 +29,18 @@ class Api {
       .then(this._handleResponse)
   }
 
+  // Загрузка карточек с сервера
+  getInitialMovies() {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`
+      },
+    })
+      .then(this._handleResponse)
+  }
+
   //Добавление фильма
   createMovie(movie) {
     return fetch(`${this._baseUrl}/movies`, {
