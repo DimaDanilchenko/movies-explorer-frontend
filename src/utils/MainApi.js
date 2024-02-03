@@ -1,4 +1,4 @@
-class Api {
+class MainApi {
   constructor({ baseUrl, headers }) {
     this._headers = headers;
     this._baseUrl = baseUrl;
@@ -29,24 +29,21 @@ class Api {
       .then(this._handleResponse)
   }
 
-  updateUser(name, email) {
+  editUserInfo(userData) {
     return fetch(`${this._baseUrl}/users/me`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': 'application/json'
+        "content-type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`
       },
-      credentials: 'include',
       body: JSON.stringify({
-        name,
-        email
-      }),
-    })
-    .then(res => {
-      return this._checkStatus(res);
-    })
+        name: userData.name,
+        email: userData.email
+      })
+    }).then(this._handleResponse)
   }
 
-  // Загрузка карточек с сервера
+  // Загрузка сохраненных фильмов с сервера
   getSavedMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       method: "GET",
@@ -82,18 +79,7 @@ class Api {
     }).then(this._handleResponse)
   }
 
-  // Удаление карточки
-  removeCard(id, token) {
-    return fetch(`${this._baseUrl}/movies/${id}`, {
-      method: 'DELETE',
-      headers: {
-        ...this._headers,
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(this._handleResponse)
-  }
-
+  // Удаление фильма
   deleteSavedMovie(movieId, token) {
     return fetch(`${this._baseUrl}/movies/${movieId}`, {
       method: 'DELETE',
@@ -106,7 +92,7 @@ class Api {
   }
 
 }
-const api = new Api({
+const mainApi = new MainApi({
   baseUrl: 'http://localhost:3000',
   //baseUrl: 'https://api.dima-dan.nomoredomainsmonster.ru',
   headers: {
@@ -114,4 +100,4 @@ const api = new Api({
   }
 });
 
-export default api;
+export default mainApi;

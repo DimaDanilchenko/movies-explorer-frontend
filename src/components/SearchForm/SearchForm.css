@@ -52,7 +52,6 @@
   display: flex;
   min-width: 292px;
   justify-content: center;
-  align-items: center;
 }
 
 .search-form__wrap {

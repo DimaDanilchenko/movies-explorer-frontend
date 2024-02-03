@@ -3,8 +3,6 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import './Movies.css';
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import Header from '../Header/Header';
 import useEffectAfterMount from '../../hooks/useEffectAfterMount';
 
 export default function Movies({ allMovies, savedMovies, saveMovie, deleteMovie, savedMoviesIds }) {
@@ -15,19 +13,16 @@ export default function Movies({ allMovies, savedMovies, saveMovie, deleteMovie,
   });
   const [isNoSearch, setIsNoSearch] = useState(true);
 
-  const handleSearchMovies = function(name, isShort) {
+  function handleSearchMovies(name, isShort) {
     if (!name) {
       setSettingObject({
         ...settingObject,
         movieName: ''
       })
-      
       return;
     }
-
     const lowerString = name.toLowerCase();
     const filteringString = `${lowerString[0].toUpperCase()}${lowerString.slice(1)}`
-
     setSettingObject({
       ...settingObject,
       movieName: filteringString,
@@ -35,7 +30,7 @@ export default function Movies({ allMovies, savedMovies, saveMovie, deleteMovie,
     })
   }
 
-  const switchShorts = function(isShort) {
+  function switchShorts(isShort) {
     setSettingObject({
       ...settingObject,
       isShort
@@ -43,28 +38,20 @@ export default function Movies({ allMovies, savedMovies, saveMovie, deleteMovie,
   }
 
   useEffectAfterMount(() => {
-    
     if (localStorage.getItem('movieName') && isNoSearch) {
       let movieName = localStorage.getItem('movieName').toLowerCase();
-      movieName = `${movieName[0].toUpperCase()}${movieName.slice(1, )}`
-
-      console.log(movieName);
-
+      movieName = `${movieName[0].toUpperCase()}${movieName.slice(1,)}`
       setSettingObject({
         ...settingObject,
         movieName
       })
       setIsNoSearch(false);
     }
-
     if (!settingObject.movieName) {
       setAllSituableMovies([]);
-
       return;
     }
-
     const ruRegExp = /[а-яё]/i;
-
     const catchedMovies = allMovies.filter(el => {
       return settingObject.movieName.match(ruRegExp) ?
         // el.nameRU.startsWith(settingObject.movieName) :
@@ -77,14 +64,10 @@ export default function Movies({ allMovies, savedMovies, saveMovie, deleteMovie,
       const shortCatchedMovies = catchedMovies.filter(el => {
         return el.duration <= 40;
       });
-
       setAllSituableMovies(shortCatchedMovies);
-
       return;
     }
-
     setAllSituableMovies(catchedMovies);
-
   }, [settingObject])
 
   useEffect(() => {

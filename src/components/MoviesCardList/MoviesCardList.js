@@ -1,6 +1,6 @@
-import {React, useEffect, useState} from 'react';
+import {React, useState} from 'react';
 import './MoviesCardList.css';
-import { translateTime } from '../../utils/utils';
+import { translateTime } from '../../utils/translateTime';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { useLocation } from 'react-router-dom';
 import useMediaQuery from '../../hooks/useMediaQuery';
@@ -10,7 +10,6 @@ import Preloader from '../Preloader/Preloader';
 export default function MoviesCardList({ movies, allMovies, settingObject, saveMovie, savedMovies, deleteMovie, savedMoviesIds }) {
   const location = useLocation();
   const isPathMovies = location.pathname !== '/movies';
-
   const isDesktop = useMediaQuery("(min-width: 1280px)");
   const isTablet = useMediaQuery("(min-width: 768px)");
 
@@ -19,11 +18,10 @@ export default function MoviesCardList({ movies, allMovies, settingObject, saveM
   : isTablet
   ? sizes.TABLET_INITIAL_MOVIES
   : sizes.MOBILE_INITIAL_MOVIES;
-
+  
   const [visibleMovies, setVisibleMovies] = useState(initialMovies);
   const [isAllMoviesShown, setIsAllMoviesShown] = useState(false);
-
-  const calculateMovies = function() {
+  function calculateMovies() {
     if (isDesktop) {
       return setVisibleMovies(visibleMovies  + sizes.DESKTOP_MOVIES_LOAD);
     }
@@ -35,7 +33,7 @@ export default function MoviesCardList({ movies, allMovies, settingObject, saveM
     setVisibleMovies(visibleMovies  + sizes.TABLET_MOVIES_LOAD);
   }
 
-  const hanleLoadMore = function() {
+  function hanleLoadMore() {
     calculateMovies();
   }
 

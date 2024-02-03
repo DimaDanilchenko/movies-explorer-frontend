@@ -1,5 +1,5 @@
 class MoviesApi {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
   }
 
@@ -11,7 +11,7 @@ class MoviesApi {
   }
 
 
-  // Загрузка карточек с сервера
+  // Загрузка карточек с сервера beatfilm-movies
   getInitialMovies() {
     return fetch(`${this._baseUrl}`, {
       method: "GET",
@@ -21,7 +21,6 @@ class MoviesApi {
   
 }
 const moviesApi = new MoviesApi({
-  //baseUrl: 'http://localhost:3000',
   baseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
 });
 

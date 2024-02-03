@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 
-export default function MoviesCard({ name, imageSrc, duration, savedMovies, movieData, saveMovie, deleteMovie, movieId, isSaved }) {
+export default function MoviesCard({ name, imageSrc, duration, savedMovies, movieData, saveMovie, deleteMovie, isSaved }) {
   const location = useLocation();
   const isMainPage = location.pathname === '/movies';
 

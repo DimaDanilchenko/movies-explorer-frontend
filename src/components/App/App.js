@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate, useLocation } from "react-router-dom";
-import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
@@ -10,35 +9,36 @@ import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import api from '../../utils/MainApi';
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 import * as auth from "../../utils/auth";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import './App.css';
 
 function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userInfo, setUserInfo] = useState('');
   const [allMovies, setAllMovies] = useState([]);
   const [currentUser, setCurrentUser] = useState({
     name: "",
     email: "",
     _id: ""
   });
-  const [email, setEmail] = useState(null);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [status, setStatus] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
-  const [savedMoviesCopy, setSavedMoviesCopy] = useState([]);
-
+  const [isTooltipPopupOpen, setIsTooltipPopupOpen] = useState(false);
   const [savedMoviesIds, setSavedMoviesIds] = useState([]);
-
-  const [isUserInfoChange, setIsUserInfoChange] = useState(false);
-
+  const [success, setSuccess] = useState(false);
+  const [popupText, setPopupText] = useState("");
   const jwt = localStorage.getItem("jwt");
+
+  function closePopup() {
+    setIsTooltipPopupOpen(false);
+  }
 
   useEffect(() => {
     moviesApi.getInitialMovies()
@@ -131,19 +131,25 @@ function App() {
     setLoggedIn(false);
   }
 
-  const updateUserInfo = function (name, email) {
-    mainApi.updateUser(name, email)
-      .then(res => {
+  function handleUpdateUser({ name, email }) {
+    setIsLoading(true);
+    mainApi
+      .editUserInfo({ name, email })
+      .then((newData) => {
         setCurrentUser({
-          name: res.name,
-          email: res.email
-        })
-        setIsUserInfoChange(true);
-        setTimeout(() => {
-          setIsUserInfoChange(false);
-        }, 3000)
+          name: newData.name,
+          email: newData.email
+        });
+        setIsTooltipPopupOpen(true);
+        setSuccess(true);
+        setPopupText("Данные успешно изменены.");
       })
-      .catch(err => console.log(err))
+      .catch((err) => {
+        setIsTooltipPopupOpen(true);
+        setSuccess(false);
+        setPopupText(`Ошибка: ${err}`);
+      })
+      .finally(() => setIsLoading(false));
   }
 
   function handleMovieSave(movie) {
@@ -192,10 +198,10 @@ function App() {
           />
           <Route path="/profile" element={
             <Profile
-              userInfo={userInfo}
+              userInfo={currentUser}
               onSignOut={handleSignOut}
-              updateUserInfo={updateUserInfo}
-              isUserInfoChange={isUserInfoChange}
+              onUpdateUser={handleUpdateUser}
+              isLoading={isLoading}
             />}
           />
           <Route path="/movies" element={
@@ -217,6 +223,12 @@ function App() {
             <PageNotFound />}
           />
         </Routes>
+        <InfoTooltip
+          isOpen={isTooltipPopupOpen}
+          onClose={closePopup}
+          success={success}
+          text={popupText}
+        />
         {pathname === '/' || pathname === '/movies' || pathname === '/saved-movies' ? <Footer /> : ''}
       </div>
     </CurrentUserContext.Provider>

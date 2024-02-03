@@ -1,14 +1,11 @@
 import { React, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Link } from "react-router-dom";
-import './SearchForm.css';
 import searchFormImage from '../../images/find-3.svg';
+import './SearchForm.css';
 
 export default function SearchForm({ handleSearchMovies, switchShorts }) {
   const location = useLocation();
-
   const isMoviesPath = location.pathname === '/movies';
-
   const [movieName, setMovieName] = useState('');
   const [isShortMovie, setIsShortMovie] = useState(false);
 
@@ -17,30 +14,27 @@ export default function SearchForm({ handleSearchMovies, switchShorts }) {
       if (localStorage.getItem('movieName')) {
         setMovieName(localStorage.getItem('movieName'));
       }
-
       if (localStorage.getItem('isMoviesShort')) {
         setIsShortMovie(true);
       }
     }
   }, [])
 
-  const handleInput = function (e) {
+  function handleInput (e) {
     setMovieName(e.target.value);
   }
 
-  const handleSwitchCheckbox = function () {
+  function handleSwitchCheckbox () {
     setIsShortMovie(!isShortMovie);
     switchShorts(!isShortMovie);
     !isShortMovie ? localStorage.setItem('isMoviesShort', true) : localStorage.removeItem('isMoviesShort');
   }
 
-  const handleSubmit = function (e) {
+  function handleSubmit (e) {
     e.preventDefault();
-
     if (isMoviesPath) {
       movieName ? localStorage.setItem('movieName', movieName) : localStorage.removeItem('movieName');
     }
-
     return handleSearchMovies(movieName, isShortMovie);
   }
 
