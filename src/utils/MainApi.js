@@ -93,8 +93,8 @@ class MainApi {
 
 }
 const mainApi = new MainApi({
-  baseUrl: 'http://localhost:3000',
-  //baseUrl: 'https://api.dima-dan.nomoredomainsmonster.ru',
+  //baseUrl: 'http://localhost:3000',
+  baseUrl: 'https://dima.movies.nomoredomainswork.ru',
   headers: {
     'Content-Type': 'application/json'
   }
