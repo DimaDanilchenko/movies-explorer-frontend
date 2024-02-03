@@ -30,6 +30,8 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [savedMoviesCopy, setSavedMoviesCopy] = useState([]);
 
+  const [savedMoviesIds, setSavedMoviesIds] = useState([]);
+
   const jwt = localStorage.getItem("jwt");
 
   useEffect(() => {
@@ -47,11 +49,17 @@ function App() {
 
   useEffect(() => {
     mainApi
-      .getInitialMovies()
-      .then((res) => {
-        setSavedMovies(savedMovies.concat(res));
+      .getSavedMovies()
+      .then(data => {
+        setSavedMovies(state => [...state, ...data]);
+        const ids = data.map(el => {
+          return el.movieId;
+        })
+        setSavedMoviesIds(ids);
       })
+      .catch(console.error)
   }, []);
+
 
   useEffect(() => {
     tokenCheck();
@@ -132,6 +140,19 @@ function App() {
     .catch(console.error)
   }
 
+  const deleteMovie = function(id) {
+    console.log(id);
+    mainApi.removeMovie(id)
+    .then(res => {
+      const newSavedMovies = savedMovies.filter(el => {
+        return el.movieId !== res.movieId;
+      })
+      setSavedMovies(newSavedMovies);
+      setSavedMoviesIds(newSavedMovies.map(el => el.movieId))
+    })
+    .catch(err => console.log(err))
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -156,11 +177,17 @@ function App() {
           <Route path="/movies" element={
             <Movies 
             allMovies={allMovies}
-            onMovieSave={handleMovieSave}
+            saveMovie={handleMovieSave}
+            savedMoviesIds={savedMoviesIds}
+            savedMovies={savedMovies}
+            deleteMovie={deleteMovie}
             />}
           />
           <Route path="/saved-movies" element={
-            <SavedMovies allMovies={allMovies} />}
+            <SavedMovies 
+              savedMovies={savedMovies}
+              deleteMovie={deleteMovie}
+            />}
           />
           <Route path="*" element={
             <PageNotFound />}

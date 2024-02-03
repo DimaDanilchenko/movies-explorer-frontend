@@ -1,36 +1,71 @@
-import React from 'react';
-import { useState } from 'react';
+import { React, useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import './SearchForm.css';
 import searchFormImage from '../../images/find-3.svg';
 
-export default function SearchForm() {
-  const [email, setEmail] = useState("");
+export default function SearchForm({ handleSearchMovies, switchShorts }) {
+  const location = useLocation();
 
-  function handleEmailChange(e) {
-    setEmail(e.target.value);
+  const isMoviesPath = location.pathname === '/movies';
+
+  const [movieName, setMovieName] = useState('');
+  const [isShortMovie, setIsShortMovie] = useState(false);
+
+  useEffect(() => {
+    if (isMoviesPath) {
+      if (localStorage.getItem('movieName')) {
+        setMovieName(localStorage.getItem('movieName'));
+      }
+
+      if (localStorage.getItem('isMoviesShort')) {
+        setIsShortMovie(true);
+      }
+    }
+  }, [])
+
+  const handleInput = function (e) {
+    setMovieName(e.target.value);
   }
+
+  const handleSwitchCheckbox = function () {
+    setIsShortMovie(!isShortMovie);
+    switchShorts(!isShortMovie);
+    !isShortMovie ? localStorage.setItem('isMoviesShort', true) : localStorage.removeItem('isMoviesShort');
+  }
+
+  const handleSubmit = function (e) {
+    e.preventDefault();
+
+    if (isMoviesPath) {
+      movieName ? localStorage.setItem('movieName', movieName) : localStorage.removeItem('movieName');
+    }
+
+    return handleSearchMovies(movieName, isShortMovie);
+  }
+
   return (
-    <form className='search-form'>
+    <form className='search-form' onSubmit={handleSubmit}>
       <div className="search-form__container">
         <div className="search-form__data">
           <input
-            id="search-form-input"
             type="text"
             name="search"
             className="search-form__input"
             placeholder="Фильм"
-            onChange={handleEmailChange}
-            value={email}
+            onChange={handleInput}
+            value={movieName}
             required=""
           />
-          <img src={searchFormImage} alt="" className="search-form__image" />
+          <button src={searchFormImage} className="search-form__image" />
         </div>
         <div className='search-form__checkbox-field'>
           <label className='search-form__wrap'>
             <input
               type='checkbox'
               className='search-form__input-checkbox'
+              onChange={handleSwitchCheckbox}
+              checked={isShortMovie}
             />
             <span className='checkbox__mark'></span>
           </label>

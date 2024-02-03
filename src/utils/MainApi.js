@@ -30,7 +30,7 @@ class Api {
   }
 
   // Загрузка карточек с сервера
-  getInitialMovies() {
+  getSavedMovies() {
     return fetch(`${this._baseUrl}/movies`, {
       method: "GET",
       headers: {
@@ -66,12 +66,12 @@ class Api {
   }
 
   // Удаление карточки
-  removeCard(id, token) {
-    return fetch(`${this._baseUrl}/cards/${id}`, {
+  removeMovie(id, token) {
+    return fetch(`${this._baseUrl}/movies/${id}`, {
       method: 'DELETE',
       headers: {
         ...this._headers,
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`
       }
     })
       .then(this._handleResponse)
