@@ -95,7 +95,7 @@ export default function MoviesCardList({ movies, allMovies, settingObject, saveM
               ))
             }
           </div> :
-          <p className='movies-card-list__not-found'>Ничего не найдено</p>
+          <p className='card-list__not-found'>Ничего не найдено</p>
         )
       }
       <button

@@ -32,6 +32,11 @@ const Header = ({ loggedIn }) => {
             ) :
               (
                 <>
+                  <button
+                    type="button"
+                    className='header__button_burger'
+                    onClick={openNavMenu}
+                  ></button>
                   <div className='header__links'>
                     <Link className='header__link' to='/movies'>Фильмы</Link>
                     <Link className='header__link' to='/saved-movies'>Сохранённые фильмы</Link>

@@ -27,9 +27,7 @@ export default function MoviesCard({ name, imageSrc, duration, savedMovies, movi
           ) :
           (
             <button type='button' className='movie__save movies-save__button_delete'
-              onClick={() => {
-                deleteMovie(movieId);
-              }}
+              onClick={() => { deleteMovie(movieData)}}
             ></button>
           )
       }

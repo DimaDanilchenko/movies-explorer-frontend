@@ -13,7 +13,7 @@ const Navigation = ({ closeNavMenu, navigationVisible }) => {
         <button type="button" className='navigation__close-button' onClick={closeNavMenu} />
         <ul className='navigation__links'>
           <li>
-            <Link className='navigation__link' to='/'>Главная</Link>
+            <Link className={`navigation__link ${path === '/' && 'navigation__link_active'}`} to='/'>Главная</Link>
           </li>
           <li>
             <Link className={`navigation__link ${path === '/movies' && 'navigation__link_active'}`} to='/movies'>Фильмы</Link>

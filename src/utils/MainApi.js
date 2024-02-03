@@ -19,7 +19,7 @@ class Api {
 
   // Загрузка информации о пользователе с сервера
   getUserProfile(token) {
-    return fetch(`${this._baseUrl}/profile`, {
+    return fetch(`${this._baseUrl}/user/me`, {
       method: 'GET',
       headers: {
         ...this._headers,
@@ -27,6 +27,23 @@ class Api {
       }
     })
       .then(this._handleResponse)
+  }
+
+  updateUser(name, email) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        name,
+        email
+      }),
+    })
+    .then(res => {
+      return this._checkStatus(res);
+    })
   }
 
   // Загрузка карточек с сервера
@@ -66,15 +83,26 @@ class Api {
   }
 
   // Удаление карточки
-  removeMovie(id, token) {
+  removeCard(id, token) {
     return fetch(`${this._baseUrl}/movies/${id}`, {
       method: 'DELETE',
       headers: {
         ...this._headers,
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`
+        'Authorization': `Bearer ${token}`
       }
     })
       .then(this._handleResponse)
+  }
+
+  deleteSavedMovie(movieId, token) {
+    return fetch(`${this._baseUrl}/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(this._handleResponse)
   }
 
 }

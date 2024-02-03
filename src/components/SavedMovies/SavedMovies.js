@@ -66,6 +66,7 @@ export default function SavedMovies({savedMovies, deleteMovie}) {
       isShort
     })
   }
+
   console.log(savedMovies);
 
 

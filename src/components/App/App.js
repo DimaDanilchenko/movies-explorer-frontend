@@ -22,7 +22,11 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState('');
   const [allMovies, setAllMovies] = useState([]);
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState({
+    name: "",
+    email: "",
+    _id: ""
+  });
   const [email, setEmail] = useState(null);
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [status, setStatus] = useState(false);
@@ -32,17 +36,14 @@ function App() {
 
   const [savedMoviesIds, setSavedMoviesIds] = useState([]);
 
+  const [isUserInfoChange, setIsUserInfoChange] = useState(false);
+
   const jwt = localStorage.getItem("jwt");
 
   useEffect(() => {
     moviesApi.getInitialMovies()
-      .then(data => {
-        setAllMovies(state => [...state, ...data]);
-      })
-      .catch(console.error)
-    api.getUserProfile(jwt)
       .then((res) => {
-        setCurrentUser(res);
+        setAllMovies(res);
       })
       .catch(console.error)
   }, [])
@@ -51,7 +52,7 @@ function App() {
     mainApi
       .getSavedMovies()
       .then(data => {
-        setSavedMovies(state => [...state, ...data]);
+        setSavedMovies(data);
         const ids = data.map(el => {
           return el.movieId;
         })
@@ -73,10 +74,12 @@ function App() {
           .tokenCheck(jwt)
           .then((res) => {
             if (res) {
-              setEmail(res.email);
-              setCurrentUser(res);
+              setCurrentUser({
+                name: res.name,
+                email: res.email,
+                _id: res._id
+              });
               setLoggedIn(true);
-              navigate("/");
             }
           })
           .catch((err) => {
@@ -88,14 +91,13 @@ function App() {
     }
   }
 
-  function handleLogin( email, password) {
+  function handleLogin(email, password) {
     auth
       .loginUser(email, password)
       .then((res) => {
         if (res) {
           localStorage.setItem("jwt", res.token);
           tokenCheck();
-          setLoggedIn(true);
           console.log(loggedIn);
           navigate('/', { replace: true });
         }
@@ -129,29 +131,46 @@ function App() {
     setLoggedIn(false);
   }
 
+  const updateUserInfo = function (name, email) {
+    mainApi.updateUser(name, email)
+      .then(res => {
+        setCurrentUser({
+          name: res.name,
+          email: res.email
+        })
+        setIsUserInfoChange(true);
+        setTimeout(() => {
+          setIsUserInfoChange(false);
+        }, 3000)
+      })
+      .catch(err => console.log(err))
+  }
+
   function handleMovieSave(movie) {
     console.log(movie);
     mainApi
-    .createMovie(movie)
-    .then((res) => {
-      setSavedMovies(savedMovies.concat(res));
-      setSavedMoviesCopy(savedMoviesCopy.concat(res));
-    })
-    .catch(console.error)
+      .createMovie(movie)
+      .then((res) => {
+        setSavedMovies(state => [...state, res]);
+        setSavedMoviesIds([...savedMoviesIds, res.movieId])
+      })
+      .catch(console.error)
   }
 
-  const deleteMovie = function(id) {
-    console.log(id);
-    mainApi.removeMovie(id)
-    .then(res => {
-      const newSavedMovies = savedMovies.filter(el => {
-        return el.movieId !== res.movieId;
+  function handleDeleteMovie(movie) {
+    console.log(movie._id);
+    mainApi
+      .deleteSavedMovie(movie._id, jwt)
+      .then(res => {
+        const newSavedMovies = savedMovies.filter(el => {
+          return el.movieId !== res.movieId;
+        })
+        setSavedMovies(newSavedMovies);
+        setSavedMoviesIds(newSavedMovies.map(el => el.movieId))
       })
-      setSavedMovies(newSavedMovies);
-      setSavedMoviesIds(newSavedMovies.map(el => el.movieId))
-    })
-    .catch(err => console.log(err))
+      .catch(console.error)
   }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -172,21 +191,26 @@ function App() {
             <Login onLogin={handleLogin} />}
           />
           <Route path="/profile" element={
-            <Profile userInfo={userInfo} onSignOut={handleSignOut}/>}
+            <Profile
+              userInfo={userInfo}
+              onSignOut={handleSignOut}
+              updateUserInfo={updateUserInfo}
+              isUserInfoChange={isUserInfoChange}
+            />}
           />
           <Route path="/movies" element={
-            <Movies 
-            allMovies={allMovies}
-            saveMovie={handleMovieSave}
-            savedMoviesIds={savedMoviesIds}
-            savedMovies={savedMovies}
-            deleteMovie={deleteMovie}
+            <Movies
+              allMovies={allMovies}
+              saveMovie={handleMovieSave}
+              savedMoviesIds={savedMoviesIds}
+              savedMovies={savedMovies}
+              deleteMovie={handleDeleteMovie}
             />}
           />
           <Route path="/saved-movies" element={
-            <SavedMovies 
+            <SavedMovies
               savedMovies={savedMovies}
-              deleteMovie={deleteMovie}
+              deleteMovie={handleDeleteMovie}
             />}
           />
           <Route path="*" element={
