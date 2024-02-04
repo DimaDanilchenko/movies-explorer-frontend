@@ -18,7 +18,7 @@ export const registerUser = (name, email, password) => {
   }).then(handleRes);
 };
 
-export const loginUser = (email, password) => {
+export const loginUser = ({email, password}) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {

@@ -91,15 +91,15 @@ function App() {
     }
   }
 
-  function handleLogin(email, password) {
+  function handleLogin({email, password}) {
     auth
-      .loginUser(email, password)
+      .loginUser({email, password})
       .then((res) => {
         if (res) {
           localStorage.setItem("jwt", res.token);
           tokenCheck();
           console.log(loggedIn);
-          navigate('/', { replace: true });
+          navigate('/movies', { replace: true });
         }
       })
       .catch((err) => {
@@ -194,7 +194,10 @@ function App() {
             <Register onRegister={handleRegister} />}
           />
           <Route path="/signin" element={
-            <Login onLogin={handleLogin} />}
+            <Login 
+            onLogin={handleLogin}
+            isLoading={isLoading}
+            />}
           />
           <Route path="/profile" element={
             <Profile

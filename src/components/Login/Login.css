@@ -92,7 +92,13 @@
 }
 
 .login__submit:hover {
-  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.5s ease;
+}
+
+.register__submit-button-disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 .login__text {
