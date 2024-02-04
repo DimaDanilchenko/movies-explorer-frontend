@@ -35,12 +35,10 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [isTooltipPopupOpen, setIsTooltipPopupOpen] = useState(false);
-  const [savedMoviesIds, setSavedMoviesIds] = useState([]);
   const [success, setSuccess] = useState(false);
   const [popupText, setPopupText] = useState("");
   const [preloaderStatus, setPreloaderStatus] = useState(false);
   const [checkboxStatus, setCheckboxStatus] = useState(true);
-  const jwt = localStorage.getItem("jwt");
 
   function closePopup() {
     setIsTooltipPopupOpen(false);
@@ -71,7 +69,6 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-
   useEffect(() => {
     tokenCheck();
   }, []);
@@ -86,14 +83,12 @@ function App() {
     }
   }, []);
 
-  //блокировка чекбокса если нет найденных фильмов
   useEffect(() => {
     foundMovies.length !== 0
       ? setDisabledCheckbox(false)
       : setDisabledCheckbox(true);
   }, [foundMovies]);
 
-  //блокировка чекбокса если нет сохраненных фильмов
   useEffect(() => {
     savedMovies.length !== 0 || savedMoviesCopy.length !== 0
       ? setDisabledCheckboxSaved(false)

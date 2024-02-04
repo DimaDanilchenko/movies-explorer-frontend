@@ -1,6 +1,5 @@
 import { React, useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import searchFormImage from '../../images/find-3.svg';
 import './SearchForm.css';
 
 export default function SearchForm({ onSearch, onSubmitCheckbox, disabled, disabledSaved }) {
@@ -13,7 +12,6 @@ export default function SearchForm({ onSearch, onSubmitCheckbox, disabled, disab
   const location = useLocation();
 
   useEffect(() => {
-    // эффект, который устанавливает значения полей input и checkbox, если они сохранены в памяти
     if (location.pathname === "/movies") {
       setInputValue(localStorage.getItem("movieName"));
       setCheckbox(JSON.parse(localStorage.getItem("checkboxStatus")));

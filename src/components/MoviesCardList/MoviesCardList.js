@@ -1,14 +1,11 @@
 import { React, useState, useEffect } from 'react';
-import { Route, Routes, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import './MoviesCardList.css';
-import { translateTime } from '../../utils/translateTime';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import * as sizes from '../../utils/constants';
-import Preloader from '../Preloader/Preloader';
 import {
   MAX_ELEMENTS,
   TIMEOUT,
-  WIDTH_1025PX,
+  WIDTH_1260PX,
   WIDTH_1280PX,
   WIDTH_768PX
 } from "../../utils/constants";
@@ -24,7 +21,6 @@ export default function MoviesCardList({
   const [width, setWidth] = useState(1280);
   const location = useLocation();
 
-  //начальное кол-во фильмов
   function setDefaultMovies(count) {
     setMaxEl(count);
     let movies = [];
@@ -39,7 +35,7 @@ export default function MoviesCardList({
   useEffect(() => {
     if (width < WIDTH_768PX) {
       setDefaultMovies(5);
-    } else if (width < WIDTH_1025PX) {
+    } else if (width < WIDTH_1260PX) {
       setDefaultMovies(6);
     } else if (width < WIDTH_1280PX) {
       setDefaultMovies(9);
@@ -55,7 +51,6 @@ export default function MoviesCardList({
     setMovies();
   }, [maxEl]);
 
-  //отслеживает разрешение экрана
   useEffect(() => {
     onSubscribe();
     return () => offSubscribe;
@@ -90,7 +85,7 @@ export default function MoviesCardList({
   function handleAddButtonClick() {
     if (width < WIDTH_768PX) {
       setMaxEl(maxEl + 5);
-    } else if (width < WIDTH_1025PX) {
+    } else if (width < WIDTH_1260PX) {
       setMaxEl(maxEl + 2);
     } else if (width < WIDTH_1280PX) {
       setMaxEl(maxEl + 3);
