@@ -96,9 +96,26 @@
   transition: opacity 0.5s ease;
 }
 
-.register__submit-button-disabled {
+.login__submit-button_disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+.register__input-error {
+  border-bottom: 1px solid red;
+}
+
+.register__input-error:focus {
+  border-bottom: 1px solid red;
+}
+
+.login__name-error {
+  margin-top: 5px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 12px;
+  height: 24px;
+  color: red;
 }
 
 .login__text {

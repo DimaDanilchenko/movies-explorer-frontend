@@ -72,8 +72,9 @@ export default function Login({ onLogin, isLoading }) {
           required
           placeholder="Введите email"
         />
-        <span className="login__name-error" />
-        {formValues.email.errorMessage}
+        <span className="login__name-error">
+          {formValues.email.errorMessage}
+        </span>
         <label className="login-form__label">Пароль</label>
         <input
           className={`login__password ${formValues.password.errorMessage && "register__input-error"
@@ -85,17 +86,17 @@ export default function Login({ onLogin, isLoading }) {
           required
           placeholder="Введите пароль"
         />
-        <span className="login__name-error" />
-        {formValues.password.errorMessage}
+        <span className="login__name-error">
+          {formValues.password.errorMessage}
+        </span>
         <input
           type="submit"
           value="Войти"
-          className={`login__submit login__submit-button ${
-            isValid && !isLoading ? "" : "register__submit-button-disabled"
-          }`}
+          className={`login__submit login__submit-button ${isValid && !isLoading ? "" : "login__submit-button_disabled"
+            }`}
           disabled={disabled}
-          />
-        <p className="login__text">Ещё не зарегистрированы? <Link to="/sign-up" className="login__link">Регистрация</Link></p>
+        />
+        <p className="login__text">Ещё не зарегистрированы? <Link to="/signup" className="login__link">Регистрация</Link></p>
       </form>
     </main>
   )

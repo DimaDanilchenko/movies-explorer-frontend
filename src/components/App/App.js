@@ -91,9 +91,9 @@ function App() {
     }
   }
 
-  function handleLogin({email, password}) {
+  function handleLogin({ email, password }) {
     auth
-      .loginUser({email, password})
+      .loginUser({ email, password })
       .then((res) => {
         if (res) {
           localStorage.setItem("jwt", res.token);
@@ -110,15 +110,14 @@ function App() {
       });
   }
 
-  function handleRegister(name, email, password) {
-    auth.registerUser(name, email, password)
-      .then((res) => {
-        if (res) {
-          setIsInfoTooltipOpen(true);
-          setStatus(true);
-          console.log(loggedIn);
-          navigate('/', { replace: true });
-        }
+  function handleRegister({ name, email, password }) {
+    auth.registerUser({ name, email, password })
+      .then(() => {
+        handleLogin({ email, password })
+        setIsInfoTooltipOpen(true);
+        setStatus(true);
+        console.log(loggedIn);
+        navigate('/', { replace: true });
       })
       .catch((err) => {
         console.log(err);
@@ -191,12 +190,15 @@ function App() {
               />}
           />
           <Route path="/signup" element={
-            <Register onRegister={handleRegister} />}
+            <Register
+              onRegister={handleRegister}
+              isLoading={isLoading}
+            />}
           />
           <Route path="/signin" element={
-            <Login 
-            onLogin={handleLogin}
-            isLoading={isLoading}
+            <Login
+              onLogin={handleLogin}
+              isLoading={isLoading}
             />}
           />
           <Route path="/profile" element={

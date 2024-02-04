@@ -110,6 +110,28 @@
   cursor: pointer;
 }
 
+.register__error-span {
+  margin-top: 5px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 12px;
+  height: 24px;
+  color: red;
+}
+
+.register-form__submit_disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.register__input-error {
+  border-bottom: 1px solid red;
+}
+
+.register__input-error:focus {
+  border-bottom: 1px solid red;
+}
+
 .register-form__text {
   margin: 0;
   margin-bottom: 236px;
