@@ -3,70 +3,115 @@ import { useLocation } from 'react-router-dom';
 import searchFormImage from '../../images/find-3.svg';
 import './SearchForm.css';
 
-export default function SearchForm({ handleSearchMovies, switchShorts }) {
+export default function SearchForm({ onSearch, onSubmitCheckbox, disabled, disabledSaved }) {
+  const [inputSearchError, setInputSearchError] = useState({
+    errorMessage: "",
+    isValid: true
+  });
+  const [inputValue, setInputValue] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
   const location = useLocation();
-  const isMoviesPath = location.pathname === '/movies';
-  const [movieName, setMovieName] = useState('');
-  const [isShortMovie, setIsShortMovie] = useState(false);
 
   useEffect(() => {
-    if (isMoviesPath) {
-      if (localStorage.getItem('movieName')) {
-        setMovieName(localStorage.getItem('movieName'));
-      }
-      if (localStorage.getItem('isMoviesShort')) {
-        setIsShortMovie(true);
-      }
+    // эффект, который устанавливает значения полей input и checkbox, если они сохранены в памяти
+    if (location.pathname === "/movies") {
+      setInputValue(localStorage.getItem("movieName"));
+      setCheckbox(JSON.parse(localStorage.getItem("checkboxStatus")));
+      setInputSearchError({});
+    } else if (location.pathname === "/saved-movies") {
+      const checkboxStatus = JSON.parse(
+        localStorage.getItem("checkboxStatusSavedMovies")
+      );
+      setCheckbox(checkboxStatus);
+      onSubmitCheckbox(checkboxStatus);
     }
-  }, [])
+  }, [location]);
 
-  function handleInput (e) {
-    setMovieName(e.target.value);
+  useEffect(() => {
+    inputSearchError.isValid &&
+      setInputSearchError({
+        isValid: true,
+        errorMessage: ""
+      });
+  }, []);
+
+  function handleChangeCheckbox() {
+    setCheckbox(!checkbox);
+    onSubmitCheckbox(!checkbox);
   }
 
-  function handleSwitchCheckbox () {
-    setIsShortMovie(!isShortMovie);
-    switchShorts(!isShortMovie);
-    !isShortMovie ? localStorage.setItem('isMoviesShort', true) : localStorage.removeItem('isMoviesShort');
+  function handleInputChange(e) {
+    setInputValue(e.target.value);
+    if (e.target.value.length === 0) {
+      setInputSearchError({
+        isValid: e.target.validity.valid,
+        errorMessage: "Введите ключевое слово"
+      });
+    } else {
+      setInputSearchError({
+        isValid: e.target.validity.valid,
+        errorMessage: ""
+      });
+    }
   }
 
-  function handleSubmit (e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    if (isMoviesPath) {
-      movieName ? localStorage.setItem('movieName', movieName) : localStorage.removeItem('movieName');
+    if (!inputValue) {
+      return setInputSearchError({
+        isValid: false,
+        errorMessage: "Введите ключевое слово"
+      });
     }
-    return handleSearchMovies(movieName, isShortMovie);
+    onSearch(inputValue, checkbox);
   }
 
   return (
-    <form className='search-form' onSubmit={handleSubmit}>
-      <div className="search-form__container">
-        <div className="search-form__data">
+    <div className="search">
+      <form
+        name="search-movie"
+        className="search__container"
+        onSubmit={handleSubmit}
+        noValidate
+      >
+        <input
+          className={`search__input ${
+            !inputSearchError.isValid && "search__input_error"
+          }`}
+          placeholder="Фильм"
+          required
+          name="movie"
+          type="text"
+          value={inputValue || ""}
+          onChange={handleInputChange}
+        />
+
+        <button
+          type="submit"
+          className={`search__button ${
+            !inputSearchError.isValid ? "search__button_error" : ""
+          }`}
+          disabled={!inputSearchError.isValid}
+        ></button>
+      </form>
+      <span className="search__input_invalid">
+        {inputSearchError.errorMessage}
+      </span>
+      <div className="search__filter">
+        <label className="search__filter-container">
           <input
-            type="text"
-            name="search"
-            className="search-form__input"
-            placeholder="Фильм"
-            onChange={handleInput}
-            value={movieName}
-            required=""
+            className="search__filter-checkbox"
+            type="checkbox"
+            checked={checkbox ? true : false}
+            onChange={handleChangeCheckbox}
+            disabled={
+              location.pathname === "/movies" ? disabled : disabledSaved
+            }
           />
-          <button src={searchFormImage} className="search-form__image" />
-        </div>
-        <div className='search-form__checkbox-field'>
-          <label className='search-form__wrap'>
-            <input
-              type='checkbox'
-              className='search-form__input-checkbox'
-              onChange={handleSwitchCheckbox}
-              checked={isShortMovie}
-            />
-            <span className='checkbox__mark'></span>
-          </label>
-          <p className='search-form__input-span'>Короткометражки</p>
-        </div>
-        <div className="search-form__line"></div>
+          <span className="search__filter-toggle"></span>
+          <span className="search__filter-caption">Короткометражки</span>
+        </label>
       </div>
-    </form>
-  )
+    </div>
+  );
 }

@@ -21,12 +21,16 @@ function App() {
   const { pathname } = useLocation();
   const [loggedIn, setLoggedIn] = useState(false);
   const [allMovies, setAllMovies] = useState([]);
+  const [foundMovies, setFoundMovies] = useState([]);
+  const [disabledCheckbox, setDisabledCheckbox] = useState(true);
+  const [disabledCheckboxSaved, setDisabledCheckboxSaved] = useState(true);
   const [currentUser, setCurrentUser] = useState({
     name: "",
     email: "",
     _id: ""
   });
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
+  const [savedMoviesCopy, setSavedMoviesCopy] = useState([]);
   const [status, setStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
@@ -34,6 +38,8 @@ function App() {
   const [savedMoviesIds, setSavedMoviesIds] = useState([]);
   const [success, setSuccess] = useState(false);
   const [popupText, setPopupText] = useState("");
+  const [preloaderStatus, setPreloaderStatus] = useState(false);
+  const [checkboxStatus, setCheckboxStatus] = useState(true);
   const jwt = localStorage.getItem("jwt");
 
   function closePopup() {
@@ -49,22 +55,50 @@ function App() {
   }, [])
 
   useEffect(() => {
+    if (loggedIn && currentUser) {
+      getSavedMovies();
+    }
+  }, [loggedIn, currentUser]);
+
+  function getSavedMovies() {
     mainApi
       .getSavedMovies()
-      .then(data => {
-        setSavedMovies(data);
-        const ids = data.map(el => {
-          return el.movieId;
-        })
-        setSavedMoviesIds(ids);
+      .then((data) => {
+        const userMovies = data.filter((m) => m.owner === currentUser._id);
+        setSavedMovies(userMovies);
+        setSavedMoviesCopy(userMovies);
       })
-      .catch(console.error)
-  }, []);
+      .catch((err) => console.log(err));
+  }
 
 
   useEffect(() => {
     tokenCheck();
   }, []);
+
+  useEffect(() => {
+    if (
+      localStorage.getItem("searchedMovies") &&
+      localStorage.getItem("checkboxStatus")
+    ) {
+      const checkboxStatus = JSON.parse(localStorage.getItem("checkboxStatus"));
+      handleSubmitCheckbox(checkboxStatus);
+    }
+  }, []);
+
+  //блокировка чекбокса если нет найденных фильмов
+  useEffect(() => {
+    foundMovies.length !== 0
+      ? setDisabledCheckbox(false)
+      : setDisabledCheckbox(true);
+  }, [foundMovies]);
+
+  //блокировка чекбокса если нет сохраненных фильмов
+  useEffect(() => {
+    savedMovies.length !== 0 || savedMoviesCopy.length !== 0
+      ? setDisabledCheckboxSaved(false)
+      : setDisabledCheckboxSaved(true);
+  }, [savedMovies, savedMoviesCopy]);
 
   function tokenCheck() {
     if (localStorage.getItem("jwt")) {
@@ -151,29 +185,116 @@ function App() {
       .finally(() => setIsLoading(false));
   }
 
-  function handleMovieSave(movie) {
-    console.log(movie);
+  function handleSaveMovie(movie) {
     mainApi
       .createMovie(movie)
       .then((res) => {
-        setSavedMovies(state => [...state, res]);
-        setSavedMoviesIds([...savedMoviesIds, res.movieId])
+        setSavedMovies(savedMovies.concat(res));
+        setSavedMoviesCopy(savedMoviesCopy.concat(res));
       })
-      .catch(console.error)
+      .catch((err) => console.log(err));
   }
 
   function handleDeleteMovie(movie) {
     console.log(movie._id);
     mainApi
-      .deleteSavedMovie(movie._id, jwt)
-      .then(res => {
-        const newSavedMovies = savedMovies.filter(el => {
-          return el.movieId !== res.movieId;
-        })
-        setSavedMovies(newSavedMovies);
-        setSavedMoviesIds(newSavedMovies.map(el => el.movieId))
+      .deleteMovie(movie._id)
+      .then(() => {
+        const updateSavedMovies = savedMovies.filter(
+          (item) => item._id !== movie._id
+        );
+        setSavedMovies(updateSavedMovies);
+        setSavedMoviesCopy(
+          savedMoviesCopy.filter((item) => item._id !== movie._id)
+        );
       })
-      .catch(console.error)
+      .catch((err) => console.log(err));
+  }
+
+  function handleSearchMovie(movie, checked) {
+    if (allMovies.length !== 0) {
+      const searchMovies = allMovies.filter((item) =>
+        item.nameRU.toLowerCase().includes(movie.toLowerCase())
+      );
+      if (searchMovies.length === 0) {
+        setIsTooltipPopupOpen(true);
+        setPopupText("По вашему запросу ничего не найдено..");
+        setSuccess(false);
+      } else {
+        setCheckboxStatus(false);
+        localStorage.setItem("movieName", movie);
+        localStorage.setItem("searchedMovies", JSON.stringify(searchMovies));
+        localStorage.setItem("checkboxStatus", JSON.stringify(checked));
+        setFoundMovies(searchMovies);
+      }
+      return;
+    } else {
+      setPreloaderStatus(true);
+      moviesApi
+        .getInitialMovies()
+        .then((moviesFromSearch) => {
+          const searchMovies = moviesFromSearch.filter((item) =>
+            item.nameRU.toLowerCase().includes(movie.toLowerCase())
+          );
+          if (searchMovies.length === 0) {
+            setIsTooltipPopupOpen(true);
+            setPopupText("По вашему запросу ничего не найдено.");
+            setSuccess(false);
+          } else {
+            setCheckboxStatus(false);
+            localStorage.setItem("allMovies", JSON.stringify(moviesFromSearch));
+            setAllMovies(moviesFromSearch);
+            localStorage.setItem("movieName", movie);
+            localStorage.setItem(
+              "searchedMovies",
+              JSON.stringify(searchMovies)
+            );
+            localStorage.setItem("checkboxStatus", JSON.stringify(checked));
+            setFoundMovies(searchMovies);
+          }
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setPreloaderStatus(false));
+    }
+  }
+
+  function handleSubmitCheckbox(checkbox) {
+    let filteredMovies;
+    let movies = JSON.parse(localStorage.getItem("searchedMovies"));
+    if (checkbox) {
+      filteredMovies = movies.filter((item) => item.duration <= 40);
+    } else if (!checkbox) {
+      filteredMovies = movies;
+    }
+    setFoundMovies(filteredMovies);
+    localStorage.setItem("checkboxStatus", JSON.stringify(checkbox));
+  }
+
+  function handleSearchSavedMovie(query, checkbox) {
+    setPreloaderStatus(true);
+    const searchMovies = savedMovies.filter((item) =>
+      item.nameRU.toLowerCase().includes(query.toLowerCase())
+    );
+    if (searchMovies.length === 0) {
+      setIsTooltipPopupOpen(true);
+      setPopupText("По вашему запросу ничего не найдено.");
+      setSuccess(false);
+      setPreloaderStatus(false);
+    } else {
+      setCheckboxStatus(false);
+      localStorage.setItem("checkboxStatus", JSON.stringify(checkbox));
+      setSavedMovies(searchMovies);
+      setPreloaderStatus(false);
+    }
+  }
+
+  function handleSavedMoviesSubmitCheckbox(checkbox) {
+    if (checkbox) {
+      setSavedMovies(savedMovies.filter((item) => item.duration <= 40));
+    } else if (!checkbox) {
+      setSavedMovies(savedMoviesCopy);
+    }
+    localStorage.setItem("checkboxStatusSavedMovies", JSON.stringify(checkbox));
   }
 
 
@@ -211,17 +332,27 @@ function App() {
           />
           <Route path="/movies" element={
             <Movies
-              allMovies={allMovies}
-              saveMovie={handleMovieSave}
-              savedMoviesIds={savedMoviesIds}
+              onSearch={handleSearchMovie}
+              foundMovies={foundMovies}
               savedMovies={savedMovies}
-              deleteMovie={handleDeleteMovie}
+              onSaveMovie={handleSaveMovie}
+              onDeleteMovie={handleDeleteMovie}
+              disabled={checkboxStatus}
+              onSubmitCheckbox={handleSubmitCheckbox}
+              disabledCheckbox={disabledCheckbox}
+              preloaderStatus={preloaderStatus}
             />}
           />
           <Route path="/saved-movies" element={
             <SavedMovies
+              onSearch={handleSearchSavedMovie}
               savedMovies={savedMovies}
-              deleteMovie={handleDeleteMovie}
+              onSubmitCheckbox={handleSavedMoviesSubmitCheckbox}
+              disabled={checkboxStatus}
+              onDeleteMovie={handleDeleteMovie}
+              onSaveMovie={handleSaveMovie}
+              disabledCheckboxSaved={disabledCheckboxSaved}
+              preloaderStatus={preloaderStatus}
             />}
           />
           <Route path="*" element={

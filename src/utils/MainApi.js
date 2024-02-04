@@ -80,18 +80,17 @@ class MainApi {
   }
 
   // Удаление фильма
-  deleteSavedMovie(movieId, token) {
-    return fetch(`${this._baseUrl}/movies/${movieId}`, {
-      method: 'DELETE',
+  deleteMovie(id) {
+    return fetch(`${this._baseUrl}/movies/${id}`, {
+      method: "DELETE",
       headers: {
-        ...this._headers,
-        'Authorization': `Bearer ${token}`
+        "content-type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`
       }
-    })
-    .then(this._handleResponse)
+    }).then(this._handleResponse)
   }
-
 }
+
 const mainApi = new MainApi({
   //baseUrl: 'http://localhost:3000',
   baseUrl: 'https://api.dima.movies.nomoredomainswork.ru',

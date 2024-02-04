@@ -15,6 +15,9 @@ class MoviesApi {
   getInitialMovies() {
     return fetch(`${this._baseUrl}`, {
       method: "GET",
+      headers: {
+        "content-type": "application/json"
+      }
     })
       .then(this._handleResponse)
   }
