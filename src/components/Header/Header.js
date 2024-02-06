@@ -25,10 +25,17 @@ const Header = ({ loggedIn }) => {
           <img className='header__logo' src={headerLogo} alt='Логотип хэдера' onClick={() => navigate('/')}></img>
           {location.pathname === '/' ? (
             !loggedIn ? (
-              <nav className='header__links'>
-                <button type="button" className='header__button header__button_bg_transparent' onClick={() => navigate('/signup')}>Регистрация</button>
-                <button type="button" className='header__button' onClick={() => navigate('/signin')}>Войти</button>
-              </nav>
+              <>
+                <button
+                  type="button"
+                  className='header__button_burger'
+                  onClick={openNavMenu}
+                ></button>
+                <nav className='header__links'>
+                  <button type="button" className='header__button header__button_bg_transparent' onClick={() => navigate('/signup')}>Регистрация</button>
+                  <button type="button" className='header__button' onClick={() => navigate('/signin')}>Войти</button>
+                </nav>
+              </>
             ) :
               (
                 <>

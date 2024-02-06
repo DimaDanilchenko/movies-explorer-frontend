@@ -1,5 +1,5 @@
-//export const BASE_URL = "http://localhost:3000";
-export const BASE_URL = 'https://api.dima.movies.nomoredomainswork.ru';
+export const BASE_URL = "http://localhost:3000";
+//export const BASE_URL = 'https://api.dima.movies.nomoredomainswork.ru';
 
 function handleRes(res) {
   if (res.ok) {

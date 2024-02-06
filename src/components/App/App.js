@@ -45,14 +45,6 @@ function App() {
   }
 
   useEffect(() => {
-    moviesApi.getInitialMovies()
-      .then((res) => {
-        setAllMovies(res);
-      })
-      .catch(console.error)
-  }, [])
-
-  useEffect(() => {
     if (loggedIn && currentUser) {
       getSavedMovies();
     }
@@ -157,6 +149,14 @@ function App() {
   function handleSignOut() {
     localStorage.removeItem("jwt");
     setLoggedIn(false);
+    localStorage.removeItem('auth');
+    localStorage.removeItem('movieName');
+    localStorage.removeItem('allMovies');
+    localStorage.removeItem('isMoviesShort');
+    localStorage.removeItem('checkboxStatus');
+    localStorage.removeItem('searchedMovies');
+    setCurrentUser({});
+    navigate('/', { replace: true });
   }
 
   function handleUpdateUser({ name, email }) {
@@ -319,6 +319,7 @@ function App() {
           />
           <Route path="/profile" element={
             <Profile
+              loggedIn={loggedIn}
               userInfo={currentUser}
               onSignOut={handleSignOut}
               onUpdateUser={handleUpdateUser}
