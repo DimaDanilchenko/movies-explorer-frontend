@@ -25,7 +25,7 @@ export default function MoviesCard({ movie, onSaveMovie, onDeleteMovie, savedMov
   return (
     <li className="movie">
       {pathname === '/movies' ?
-        <a href={movie.trailerLink} target="blank" className='movie__trailer'>
+        <a href={movie.trailerLink} target="blank" >
           <img
             className="movie__image"
             src={`https://api.nomoreparties.co${movie.image.url}`}
@@ -33,7 +33,7 @@ export default function MoviesCard({ movie, onSaveMovie, onDeleteMovie, savedMov
           />
         </a>
         :
-        <a href={movie.trailerLink} target="blank">
+        <a href={movie.trailerLink} target="blank" className='movie__trailer'>
           <img
             className="movie__image"
             src={movie.image}

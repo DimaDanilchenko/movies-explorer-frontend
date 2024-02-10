@@ -1,103 +1,156 @@
-import { React, useEffect, useState } from 'react';
-import './Login.css';
-import { Link } from "react-router-dom";
-import loginLogo from "../../images/logo-header.svg";
+import React from "react";
+import { useState, useEffect } from "react";
+import "./Login.css";
+import { useNavigate } from "react-router-dom";
 
-export default function Login({ onLogin, isLoading }) {
+function Login({ handleLogin, loggedIn }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailDirty, setEmailDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+  const [emailError, setEmailError] = useState("start");
+  const [passwordError, setPasswordError] = useState("start");
 
-  const [formValues, setFormValues] = useState({
-    email: {
-      value: "",
-      isValid: false,
-      errorMessage: ""
-    },
-    password: {
-      value: "",
-      isValid: false,
-      errorMessage: ""
+  const [disabledButton, setDisabledButton] = useState(true);
+
+  const blurHandler = (event) => {
+    switch (event.target.name) {
+      case "email":
+        setEmailDirty(true);
+        break;
+      case "password":
+        setPasswordDirty(true);
+        break;
     }
-  });
+  };
 
-  const [disabled, setDisabled] = useState(false);
-
-  const isValid = formValues.email.isValid && formValues.password.isValid;
-
-  function handleChange(e) {
-    // деструктуризируем свойство target, получая значения инпутов и ошибки
-    const { name, value, validity, validationMessage } = e.target;
-    // устанавливаем новое состояние, обязательно совмещая с предыдущим
-    // чтобы значения других инпутов не перезаписались на undefined
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: {
-        ...formValues[name],
-        value,
-        isValid: validity.valid,
-        errorMessage: validationMessage
+  function handleEmailInput(evt) {
+    blurHandler(evt);
+    setEmail(evt.target.value);
+    const reg =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (evt.target.value.length == 0) {
+      setEmailError("Email не может быть пустым");
+    } else {
+      if (!reg.test(String(evt.target.value).toLowerCase())) {
+        setEmailError("Некорректынй email");
+      } else {
+        setEmailError("");
       }
-    }));
+    }
+  }
+
+  function handlePasswordInput(evt) {
+    blurHandler(evt);
+    setPassword(evt.target.value);
+    if (evt.target.value.length == 0) {
+      setPasswordError("Пароль не может быть пустым");
+    } else {
+      if (evt.target.value.length < 3) {
+        setPasswordError("Пароль не может быть меньше 4 символов");
+      } else {
+        if (evt.target.value.length > 29) {
+          setPasswordError("Пароль не может быть больше 30 символов");
+        } else {
+          setPasswordError("");
+        }
+      }
+    }
+  }
+
+  function handleDisableButton() {
+    if (emailError == "") {
+      if (passwordError == "") {
+        setDisabledButton(false);
+      } else {
+        setDisabledButton(true);
+      }
+    } else {
+      setDisabledButton(true);
+    }
   }
 
   useEffect(() => {
-    isLoading ? setDisabled(true) : setDisabled(false);
-  }, [isLoading]);
+    handleDisableButton();
+  }, [emailError]);
 
   useEffect(() => {
-    isValid ? setDisabled(false) : setDisabled(true);
-  }, [isValid]);
+    handleDisableButton();
+  }, [passwordError]);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    onLogin({
-      email: formValues.email.value,
-      password: formValues.password.value
-    });
-  }
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    handleLogin(email, password);
+  };
+
+  const navigate = useNavigate();
   return (
-    <main className='login'>
-      <Link className="login__logo" to='/' />
-      <p className="login__title">Рады видеть!</p>
-      <form className="login-form" onSubmit={handleSubmit}>
-        <label className="login-form__label">E-mail</label>
-        <input
-          id="login-email-input"
-          name="email"
-          // className="login__email"
-          className={`login__email ${formValues.email.errorMessage && "register__input-error"
-            }`}
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-          value={formValues.email.value || ""}
-          onChange={handleChange}
-          type="email"
-          required
-          placeholder="Введите email"
-        />
-        <span className="login__name-error">
-          {formValues.email.errorMessage}
-        </span>
-        <label className="login-form__label">Пароль</label>
-        <input
-          className={`login__password ${formValues.password.errorMessage && "register__input-error"
-            }`}
-          name="password"
-          value={formValues.password.value || ""}
-          onChange={handleChange}
-          type="password"
-          required
-          placeholder="Введите пароль"
-        />
-        <span className="login__name-error">
-          {formValues.password.errorMessage}
-        </span>
-        <input
-          type="submit"
-          value="Войти"
-          className={`login__submit login__submit-button ${isValid && !isLoading ? "" : "login__submit-button_disabled"
-            }`}
-          disabled={disabled}
-        />
-        <p className="login__text">Ещё не зарегистрированы? <Link to="/signup" className="login__link">Регистрация</Link></p>
+    <main>
+      <form className="login" onSubmit={handleSubmit}>
+        <div className="login__logo" onClick={() => navigate("/")}></div>
+        <h2 className="login__title">Рады видеть!</h2>
+        <div className="login__input-container">
+          <p className="login__input-name">E-mail</p>
+          <input
+            className="login__input"
+            type="text"
+            name="email"
+            required
+            placeholder="E-mail"
+            value={email}
+            onChange={handleEmailInput}
+          ></input>
+          {emailDirty && emailError && (
+            <span className="login__input-error">{emailError}</span>
+          )}
+        </div>
+        <div className="login__input-container">
+          <p className="login__input-name">Пароль</p>
+          {passwordDirty && passwordError ? (
+            <input
+              className="login__input login__input_type_password"
+              type="password"
+              name="password"
+              required
+              placeholder="Пароль"
+              value={password}
+              autoComplete="on"
+              onChange={handlePasswordInput}
+            ></input>
+          ) : (
+            <input
+              className="login__input"
+              type="password"
+              name="password"
+              required
+              placeholder="Пароль"
+              value={password}
+              autoComplete="on"
+              onChange={handlePasswordInput}
+            ></input>
+          )}
+          {passwordDirty && passwordError && (
+            <span className="login__input-error">{passwordError}</span>
+          )}
+        </div>
+        {disabledButton == true ? (
+          <button className="login__button login__button_disabled">
+            Войти
+          </button>
+        ) : (
+          <button className="login__button" type="submit">
+            Войти
+          </button>
+        )}
+        <div className="login__already-container">
+          <p className="login__already-text">Ещё не зарегистрированы?</p>
+          <a className="login__already-link" href="/signup">
+            Регистрация
+          </a>
+        </div>
       </form>
     </main>
-  )
+  );
 }
+
+export default Login;

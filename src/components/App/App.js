@@ -14,6 +14,7 @@ import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 import * as auth from "../../utils/auth";
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import './App.css';
 
 function App() {
@@ -31,7 +32,6 @@ function App() {
   });
   const [isInfoTooltipOpen, setIsInfoTooltipOpen] = useState(false);
   const [savedMoviesCopy, setSavedMoviesCopy] = useState([]);
-  const [status, setStatus] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [isTooltipPopupOpen, setIsTooltipPopupOpen] = useState(false);
@@ -39,6 +39,7 @@ function App() {
   const [popupText, setPopupText] = useState("");
   const [preloaderStatus, setPreloaderStatus] = useState(false);
   const [checkboxStatus, setCheckboxStatus] = useState(true);
+  const jwt = localStorage.getItem("jwt");
 
   function closePopup() {
     setIsTooltipPopupOpen(false);
@@ -112,13 +113,14 @@ function App() {
     }
   }
 
-  function handleLogin({ email, password }) {
+  function handleLogin(email, password) {
     auth
       .loginUser({ email, password })
       .then((res) => {
         if (res) {
           localStorage.setItem("jwt", res.token);
           tokenCheck();
+          setLoggedIn(true);
           console.log(loggedIn);
           navigate('/movies', { replace: true });
         }
@@ -126,24 +128,24 @@ function App() {
       .catch((err) => {
         console.log(err);
         setIsInfoTooltipOpen(true);
-        setStatus(false);
+        setLoggedIn(false);
         navigate('/signin', { replace: true });
       });
   }
 
-  function handleRegister({ name, email, password }) {
+  function handleRegister({name, email, password }) {
     auth.registerUser({ name, email, password })
       .then(() => {
         handleLogin({ email, password })
         setIsInfoTooltipOpen(true);
-        setStatus(true);
+        setLoggedIn(true);
         console.log(loggedIn);
         navigate('/', { replace: true });
       })
       .catch((err) => {
         console.log(err);
         setIsInfoTooltipOpen(true);
-        setStatus(false);
+        setLoggedIn(false);
       });
   }
   function handleSignOut() {
@@ -181,29 +183,23 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
+    setPreloaderStatus(true);
     mainApi
       .createMovie(movie)
       .then((res) => {
         setSavedMovies(savedMovies.concat(res));
         setSavedMoviesCopy(savedMoviesCopy.concat(res));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setPreloaderStatus(false));
   }
 
   function handleDeleteMovie(movie) {
-    console.log(movie._id);
-    mainApi
-      .deleteMovie(movie._id)
-      .then(() => {
-        const updateSavedMovies = savedMovies.filter(
-          (item) => item._id !== movie._id
-        );
-        setSavedMovies(updateSavedMovies);
-        setSavedMoviesCopy(
-          savedMoviesCopy.filter((item) => item._id !== movie._id)
-        );
+    mainApi.removeCard(movie._id, jwt)
+      .then((res) => {
+        setSavedMovies((state) => state.filter((item) => item._id !== movie._id));
       })
-      .catch((err) => console.log(err));
+      .catch(console.error)
   }
 
   function handleSearchMovie(movie, checked) {
@@ -307,18 +303,19 @@ function App() {
           />
           <Route path="/signup" element={
             <Register
-              onRegister={handleRegister}
+              handleRegister={handleRegister}
               isLoading={isLoading}
             />}
           />
           <Route path="/signin" element={
             <Login
-              onLogin={handleLogin}
+              handleLogin={handleLogin}
               isLoading={isLoading}
             />}
           />
           <Route path="/profile" element={
-            <Profile
+            <ProtectedRoute
+              component={Profile}
               loggedIn={loggedIn}
               userInfo={currentUser}
               onSignOut={handleSignOut}
@@ -327,7 +324,9 @@ function App() {
             />}
           />
           <Route path="/movies" element={
-            <Movies
+            <ProtectedRoute
+              component={Movies}
+              loggedIn={loggedIn}
               onSearch={handleSearchMovie}
               foundMovies={foundMovies}
               savedMovies={savedMovies}
@@ -340,7 +339,9 @@ function App() {
             />}
           />
           <Route path="/saved-movies" element={
-            <SavedMovies
+            <ProtectedRoute
+              component={SavedMovies}
+              loggedIn={loggedIn}
               onSearch={handleSearchSavedMovie}
               savedMovies={savedMovies}
               onSubmitCheckbox={handleSavedMoviesSubmitCheckbox}

@@ -34,19 +34,10 @@
   transition: background 0.4s ease;
 }
 
-.search__input:focus {
-  outline: 1px solid #3ddc84;
-  transition: outline 2s ease;
-}
-
 .search__input_error {
   outline: 1px solid red;
 }
 
-.search__input_error:focus {
-  transition: outline 2s ease;
-  outline: 1px solid red;
-}
 
 .search__input_invalid {
   margin: 0;

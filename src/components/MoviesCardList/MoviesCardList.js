@@ -2,12 +2,14 @@ import { React, useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import { useRef } from 'react';
 import {
   MAX_ELEMENTS,
   TIMEOUT,
+  WIDTH_1025PX,
   WIDTH_1260PX,
-  WIDTH_1280PX,
-  WIDTH_768PX
+  WIDTH_768PX,
+  WIDTH_450PX
 } from "../../utils/constants";
 
 export default function MoviesCardList({
@@ -18,9 +20,10 @@ export default function MoviesCardList({
   const { pathname } = useLocation();
   const [maxEl, setMaxEl] = useState(12);
   const [renderedMovies, setRenderedMovies] = useState([]);
-  const [width, setWidth] = useState(1280);
+  const [width, setWidth] = useState();
   const location = useLocation();
 
+  //начальное кол-во фильмов
   function setDefaultMovies(count) {
     setMaxEl(count);
     let movies = [];
@@ -33,12 +36,13 @@ export default function MoviesCardList({
   }
 
   useEffect(() => {
-    if (width < WIDTH_768PX) {
-      setDefaultMovies(5);
-    } else if (width < WIDTH_1260PX) {
-      setDefaultMovies(6);
-    } else if (width < WIDTH_1280PX) {
-      setDefaultMovies(9);
+    const display = window.innerWidth;
+    if (display < WIDTH_450PX) {
+      setDefaultMovies(5)
+    } else if (display < WIDTH_1025PX) {
+      setDefaultMovies(8);
+    } else if (display < WIDTH_1260PX) {
+      setDefaultMovies(8);
     } else {
       setDefaultMovies(12);
     }
@@ -51,6 +55,7 @@ export default function MoviesCardList({
     setMovies();
   }, [maxEl]);
 
+  //отслеживает разрешение экрана
   useEffect(() => {
     onSubscribe();
     return () => offSubscribe;
@@ -83,12 +88,13 @@ export default function MoviesCardList({
   }
 
   function handleAddButtonClick() {
-    if (width < WIDTH_768PX) {
-      setMaxEl(maxEl + 5);
-    } else if (width < WIDTH_1260PX) {
+    const display = window.innerWidth;
+    if (display < WIDTH_768PX) {
       setMaxEl(maxEl + 2);
-    } else if (width < WIDTH_1280PX) {
-      setMaxEl(maxEl + 3);
+    } else if (display < WIDTH_1025PX) {
+      setMaxEl(maxEl + 2);
+    } else if (display < WIDTH_1260PX) {
+      setMaxEl(maxEl + 2);
     } else {
       setMaxEl(maxEl + 3);
     }
@@ -120,8 +126,8 @@ export default function MoviesCardList({
       )}
       {pathname === '/saved-movies' ?
         <div className="movies-list__saved-devider"></div>
-      :
-      ""}
+        :
+        ""}
     </div>
   );
 }

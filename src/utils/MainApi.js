@@ -80,14 +80,26 @@ class MainApi {
   }
 
   // Удаление фильма
-  deleteMovie(id) {
-    return fetch(`${this._baseUrl}/movies/${id}`, {
+  deleteMovie(cardId) {
+    return fetch(`${this._baseUrl}/movies/${cardId}`, {
       method: "DELETE",
+      credentials: "include",
       headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("jwt")}`
-      }
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     }).then(this._handleResponse)
+  }
+
+  removeCard(id, token) {
+    return fetch(`${this._baseUrl}/movies/${id}`, {
+      method: 'DELETE',
+      headers: {
+        ...this._headers,
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(this._handleResponse)
   }
 }
 

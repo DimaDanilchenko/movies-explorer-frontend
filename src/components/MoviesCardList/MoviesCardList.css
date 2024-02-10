@@ -5,6 +5,7 @@
 .card-list {
   max-width: calc(100% - 70*2px);
   margin: 0 auto;
+  padding: 0;
   margin-top: 70px;
   display: grid;
   justify-items: center;

@@ -1,130 +1,204 @@
-import React from 'react';
-import './Register.css';
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { Link } from "react-router-dom";
-import registerLogo from "../../images/logo-header.svg";
+import React from "react";
+import { useState, useEffect } from "react";
+import "./Register.css";
+import { useNavigate } from "react-router-dom";
 
-export default function Register({ onRegister, isLoading }) {
-  const [formValues, setFormValues] = useState({
-    name: {
-      value: "",
-      isValid: false,
-      errorMessage: ""
-    },
-    email: {
-      value: "",
-      isValid: false,
-      errorMessage: ""
-    },
-    password: {
-      value: "",
-      isValid: false,
-      errorMessage: ""
+function Register({ handleRegister, loggedIn }) {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [emailDirty, setEmailDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+  const [nameDirty, setNameDirty] = useState(false);
+  const [emailError, setEmailError] = useState("start");
+  const [passwordError, setPasswordError] = useState("start");
+  const [nameError, setNameError] = useState("start");
+
+  const [disabledButton, setDisabledButton] = useState(true);
+
+  const blurHandler = (event) => {
+    switch (event.target.name) {
+      case "name":
+        setNameDirty(true);
+        break;
+      case "email":
+        setEmailDirty(true);
+        break;
+      case "password":
+        setPasswordDirty(true);
+        break;
     }
-  });
+  };
 
-  const [disabled, setDisabled] = useState(false);
-
-  const isValid =
-    formValues.name.isValid &&
-    formValues.email.isValid &&
-    formValues.password.isValid;
-
-  function handleChange(e) {
-    // деструктуризируем свойство target, получая значения инпутов и ошибки
-    const { name, value, validity, validationMessage } = e.target;
-    // устанавливаем новое состояние, обязательно совмещая с предыдущим
-    // чтобы значения других инпутов не перезаписались на undefined
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: {
-        ...formValues[name],
-        value,
-        isValid: validity.valid,
-        errorMessage: validationMessage
+  function handleEmailInput(evt) {
+    blurHandler(evt);
+    setEmail(evt.target.value);
+    const reg =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (evt.target.value.length == 0) {
+      setEmailError("Email не может быть пустым");
+    } else {
+      if (!reg.test(String(evt.target.value).toLowerCase())) {
+        setEmailError("Некорректынй email");
+      } else {
+        setEmailError("");
       }
-    }));
+    }
+  }
+
+  function handlePasswordInput(evt) {
+    blurHandler(evt);
+    setPassword(evt.target.value);
+    if (evt.target.value.length == 0) {
+      setPasswordError("Пароль не может быть пустым");
+    } else {
+      if (evt.target.value.length < 3) {
+        setPasswordError("Пароль не может быть меньше 4 символов");
+      } else {
+        if (evt.target.value.length > 29) {
+          setPasswordError("Пароль не может быть больше 30 символов");
+        } else {
+          setPasswordError("");
+        }
+      }
+    }
+  }
+
+  function handleNameInput(evt) {
+    blurHandler(evt);
+    setName(evt.target.value);
+    if (evt.target.value.length == 0) {
+      setNameError("Имя не может быть пустым");
+    } else {
+      if (evt.target.value.length < 2) {
+        setNameError("Имя не может быть меньше 2 символов");
+      } else {
+        if (evt.target.value.length > 29) {
+          setNameError("Имя не может быть больше 30 символов");
+        } else {
+          setNameError("");
+        }
+      }
+    }
+  }
+
+  function handleDisableButton() {
+    if (nameError == "") {
+      console.log(nameError);
+      if (emailError == "") {
+        console.log(emailError);
+        if (passwordError == "") {
+          console.log(passwordError);
+          setDisabledButton(false);
+        } else {
+          setDisabledButton(true);
+        }
+      } else {
+        setDisabledButton(true);
+      }
+    } else {
+      setDisabledButton(true);
+    }
   }
 
   useEffect(() => {
-    isValid ? setDisabled(false) : setDisabled(true);
-  }, [isValid]);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    onRegister({
-      name: formValues.name.value,
-      email: formValues.email.value,
-      password: formValues.password.value
-    });
-  }
+    handleDisableButton();
+  }, [emailError]);
 
   useEffect(() => {
-    isLoading ? setDisabled(true) : setDisabled(false);
-  }, [isLoading]);
+    handleDisableButton();
+  }, [passwordError]);
+
+  useEffect(() => {
+    handleDisableButton();
+  }, [nameError]);
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    handleRegister({email, password, name});
+  }
 
   return (
-    <main className='register'>
-      <Link className="register__logo" to='/' />
-      <p className="register__title">Добро пожаловать!</p>
-      <form className="register-form" onSubmit={handleSubmit}>
-        <label className="register-form__label">Имя</label>
-        <input
-          className={`register-form__name ${formValues.name.errorMessage && "register__input-error"
-            }`}
-          name="name"
-          onChange={handleChange}
-          value={formValues.name.value || ""}
-          required
-          minLength="2"
-          maxLength="40"
-          placeholder="Введите имя"
-          id="register-name-input"
-          type="text"
-        />
-        <span className="register__error-span">
-          {formValues.name.errorMessage}
-        </span>
-        <label className="register-form__label">E-mail</label>
-        <input
-          id="registeer-email-input"
-          placeholder='Введите адрес'
-          required=""
-          className={`register-form__email ${formValues.email.errorMessage && "register__input-error"
-            }`}
-          name="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-          onChange={handleChange}
-          value={formValues.email.value || ""}
-          type="email"
-        />
-        <span className="register__error-span">
-          {formValues.email.errorMessage}
-        </span>
-        <label className="register-form__label">Пароль</label>
-        <input
-          required=""
-          className={`register-form__password ${formValues.password.errorMessage && "register__input-error"
-            }`}
-          name="password"
-          onChange={handleChange}
-          value={formValues.password.value || ""}
-          type="password"
-          placeholder="Введите пароль"
-        />
-        <span className="register__error-span">
-          {formValues.password.errorMessage}
-        </span>
-        <input
-          type="submit"
-          value="Зарегистрироваться"
-          className={`register-form__submit ${isValid && !isLoading ? "" : "register-form__submit_disabled"
-            }`}
-          disabled={disabled}
-        />
-        <p className="register-form__text">Уже зарегистрированы? <Link to="/signin" className="register-form__link">Войти</Link></p>
+    <main>
+      <form className="register" onSubmit={handleSubmit}>
+        <div className="register__logo" onClick={() => navigate("/")}></div>
+        <h2 className="register__title">Добро пожаловать!</h2>
+        <div className="register__input-container">
+          <p className="register__input-name">Имя</p>
+          <input
+            className="register__input"
+            name="name"
+            type="text"
+            required
+            placeholder="Имя"
+            value={name}
+            onChange={handleNameInput}
+          ></input>
+          {nameDirty && nameError && (
+            <span className="register__input-error">{nameError}</span>
+          )}
+        </div>
+        <div className="register__input-container">
+          <p className="register__input-name">E-mail</p>
+          <input
+            className="register__input"
+            name="email"
+            type="text"
+            required
+            placeholder="E-mail"
+            value={email}
+            onChange={handleEmailInput}
+          ></input>
+          {emailDirty && emailError && (
+            <span className="register__input-error">{emailError}</span>
+          )}
+        </div>
+        <div className="register__input-container">
+          <p className="register__input-name">Пароль</p>
+          {passwordDirty && passwordError ? (
+            <input
+              className="register__input register__input_type_password"
+              type="password"
+              name="password"
+              required
+              placeholder="Пароль"
+              value={password}
+              onChange={handlePasswordInput}
+            ></input>
+          ) : (
+            <input
+              className="register__input"
+              type="password"
+              name="password"
+              required
+              placeholder="Пароль"
+              value={password}
+              onChange={handlePasswordInput}
+            ></input>
+          )}
+          {passwordDirty && passwordError && (
+            <span className="register__input-error">{passwordError}</span>
+          )}
+        </div>
+        {disabledButton == true ? (
+          <button className="register__button register__button_disabled">
+            Зарегестрироваться
+          </button>
+        ) : (
+          <button className="register__button" type="submit">
+            Зарегестрироваться
+          </button>
+        )}
+        <div className="register__already-container">
+          <p className="register__already-text">Уже зарегистрированы?</p>
+          <a className="register__already-link" href="/signin">
+            Войти
+          </a>
+        </div>
       </form>
     </main>
-  )
+  );
 }
+
+export default Register;

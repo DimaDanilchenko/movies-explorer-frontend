@@ -68,7 +68,7 @@ const Header = ({ loggedIn }) => {
             )}
         </div>
       </header>
-      <Navigation closeNavMenu={closeNavMenu} navigationVisible={navigationVisible} />
+      <Navigation loggedIn={loggedIn} closeNavMenu={closeNavMenu} navigationVisible={navigationVisible} />
     </>
   );
 }

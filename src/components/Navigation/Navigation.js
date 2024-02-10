@@ -2,14 +2,14 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Navigation.css';
 
-const Navigation = ({ closeNavMenu, navigationVisible }) => {
+const Navigation = ({ closeNavMenu, navigationVisible, loggedIn }) => {
   const location = useLocation();
 
   const path = location.pathname;
 
   return (
     <>
-      {location.pathname === '/' ? (
+      {location.pathname === '/' && !loggedIn ? (
         <div className={`navigation ${navigationVisible && 'navigation_open'}`}>
           <div className='navigation__container'>
             <button type="button" className='navigation__close-button' onClick={closeNavMenu} />

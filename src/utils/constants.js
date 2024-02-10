@@ -1,9 +1,3 @@
-export const WIDTH_768PX = 768;
-export const WIDTH_1260PX = 1260;
-export const WIDTH_1280PX = 1280;
-export const MAX_ELEMENTS = 120;
-export const TIMEOUT = 1000;
-
 export function handleChangeDuration(duration, movie) {
   if (duration < 60) {
     return `${movie.duration} мин`;
@@ -23,3 +17,10 @@ export function handleChangeDuration(duration, movie) {
     return `2 часа`;
   }
 }
+
+export const WIDTH_450PX = 450;
+export const WIDTH_768PX = 768;
+export const WIDTH_1025PX = 1025;
+export const WIDTH_1260PX = 1260;
+export const MAX_ELEMENTS = 120;
+export const TIMEOUT = 1000;

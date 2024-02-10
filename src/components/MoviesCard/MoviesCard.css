@@ -3,12 +3,13 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   position: relative;
   justify-items: center;
+  overflow: hidden;
 }
 
 .movie__image {
   max-width: 360px;
   height: 201px;
-  object-fit: cover;
+  object-fit: contain;
   margin: 0 auto;
 }
 
@@ -46,7 +47,7 @@
 }
 
 .movies-save__button_delete {
-  opacity: 0;
+  opacity: 1;
   background-color: #313131;
   width: 21px;
   height: 21px;
@@ -54,10 +55,6 @@
   background-repeat: no-repeat;
   background-size: 7px;
   background-position: center;
-}
-
-.movies-save__button_delete:hover{
-  opacity: 1;
 }
 
 .movies-card__button_saved_yes {
@@ -114,6 +111,8 @@
 
 .movie__trailer {
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 @media screen and (max-width: 830px) {
