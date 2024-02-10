@@ -7,6 +7,8 @@ import {
   TIMEOUT,
   WIDTH_1025PX,
   WIDTH_1260PX,
+  WIDTH_880PX,
+  WIDTH_831PX,
   WIDTH_768PX,
   WIDTH_531PX,
   WIDTH_450PX
@@ -39,15 +41,15 @@ export default function MoviesCardList({
     const display = window.innerWidth;
     if (display < WIDTH_450PX) {
       setDefaultMovies(5);
-    } else if(display < 531){
+    } else if(display < WIDTH_531PX){
       setDefaultMovies(8);
-    } else if(display < 768){
+    } else if(display < WIDTH_768PX){
       setDefaultMovies(5);
-    } else if(display < 831){
+    } else if(display < WIDTH_831PX){
       setDefaultMovies(8);
-    } else if(display < 880){
+    } else if(display < WIDTH_880PX){
       setDefaultMovies(5);
-    } else if(display < 1260){
+    } else if(display < WIDTH_1260PX){
       setDefaultMovies(8);
     }
      else {
