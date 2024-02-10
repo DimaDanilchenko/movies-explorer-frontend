@@ -38,14 +38,19 @@ export default function MoviesCardList({
   useEffect(() => {
     const display = window.innerWidth;
     if (display < WIDTH_450PX) {
-      setDefaultMovies(5)
-    } else if(display => WIDTH_531PX && display < WIDTH_768PX){
       setDefaultMovies(5);
-    } else if (display > WIDTH_768PX && display < WIDTH_1025PX){
-      setDefaultMovies(8)
-    } else if (display => WIDTH_1025PX && display < WIDTH_1260PX) {
+    } else if(display < 531){
       setDefaultMovies(8);
-    } else {
+    } else if(display < 768){
+      setDefaultMovies(5);
+    } else if(display < 831){
+      setDefaultMovies(8);
+    } else if(display < 880){
+      setDefaultMovies(5);
+    } else if(display < 1260){
+      setDefaultMovies(8);
+    }
+     else {
       setDefaultMovies(12);
     }
     if (location.pathname === "/saved-movies") {
@@ -56,8 +61,6 @@ export default function MoviesCardList({
   useEffect(() => {
     setMovies();
   }, [maxEl]);
-
-  console.log(savedMovies);
 
   //отслеживает разрешение экрана
   useEffect(() => {
