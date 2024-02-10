@@ -184,7 +184,6 @@ function App() {
   }
 
   function handleSaveMovie(movie) {
-    setPreloaderStatus(true);
     mainApi
       .createMovie(movie)
       .then((res) => {
@@ -192,7 +191,6 @@ function App() {
         setSavedMoviesCopy(savedMoviesCopy.concat(res));
       })
       .catch((err) => console.log(err))
-      .finally(() => setPreloaderStatus(false));
   }
 
   function handleDeleteMovie(movie) {

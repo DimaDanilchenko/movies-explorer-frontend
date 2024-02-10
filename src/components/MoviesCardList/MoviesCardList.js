@@ -4,11 +4,11 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { useRef } from 'react';
 import {
-  MAX_ELEMENTS,
   TIMEOUT,
   WIDTH_1025PX,
   WIDTH_1260PX,
   WIDTH_768PX,
+  WIDTH_531PX,
   WIDTH_450PX
 } from "../../utils/constants";
 
@@ -39,21 +39,25 @@ export default function MoviesCardList({
     const display = window.innerWidth;
     if (display < WIDTH_450PX) {
       setDefaultMovies(5)
-    } else if (display < WIDTH_1025PX) {
-      setDefaultMovies(8);
-    } else if (display < WIDTH_1260PX) {
+    } else if(display => WIDTH_531PX && display < WIDTH_768PX){
+      setDefaultMovies(5);
+    } else if (display > WIDTH_768PX && display < WIDTH_1025PX){
+      setDefaultMovies(8)
+    } else if (display => WIDTH_1025PX && display < WIDTH_1260PX) {
       setDefaultMovies(8);
     } else {
       setDefaultMovies(12);
     }
     if (location.pathname === "/saved-movies") {
-      setMaxEl(MAX_ELEMENTS);
+      setMaxEl(savedMovies.length);
     }
   }, [foundMovies, width, location]);
 
   useEffect(() => {
     setMovies();
   }, [maxEl]);
+
+  console.log(savedMovies);
 
   //отслеживает разрешение экрана
   useEffect(() => {
@@ -113,7 +117,7 @@ export default function MoviesCardList({
           />
         ))}
       </ul>
-      {foundMovies.length !== renderedMovies.length ? (
+      {foundMovies.length !== renderedMovies.length && pathname === '/movies' ?(
         <button
           className="card-list__still"
           type="button"

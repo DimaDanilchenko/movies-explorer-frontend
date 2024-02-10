@@ -19,8 +19,8 @@ export function handleChangeDuration(duration, movie) {
 }
 
 export const WIDTH_450PX = 450;
+export const WIDTH_531PX = 531;
 export const WIDTH_768PX = 768;
 export const WIDTH_1025PX = 1025;
 export const WIDTH_1260PX = 1260;
-export const MAX_ELEMENTS = 120;
 export const TIMEOUT = 1000;

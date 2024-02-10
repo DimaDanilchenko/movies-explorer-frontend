@@ -24,7 +24,6 @@ const Navigation = ({ closeNavMenu, navigationVisible, loggedIn }) => {
                 <Link className={`navigation__link ${path === '/saved-movies' && 'navigation__link_active'}`} to='/signup'>Регистрация</Link>
               </li>
             </ul>
-            <Link className='navigation__account-link' to='/profile'>Аккаунт</Link>
           </div>
         </div>
       ) : (
