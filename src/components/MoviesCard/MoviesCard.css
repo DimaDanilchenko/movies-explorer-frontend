@@ -6,13 +6,6 @@
   overflow: hidden;
 }
 
-.movie__image {
-  max-width: 360px;
-  height: 201px;
-  object-fit: contain;
-  margin: 0 auto;
-}
-
 .movie__save {
   position: absolute;
   top: 14px;
@@ -46,16 +39,7 @@
   min-width: 72px;
 }
 
-.movies-save__button_delete {
-  opacity: 1;
-  background-color: #313131;
-  width: 21px;
-  height: 21px;
-  background-image: url('../../images/checkbox-delete.svg');
-  background-repeat: no-repeat;
-  background-size: 7px;
-  background-position: center;
-}
+
 
 .movies-card__button_saved_yes {
   background-color: #EE3465;
@@ -115,6 +99,28 @@
   justify-content: center;
 }
 
+.movie__image {
+  max-width: 360px;
+  height: 201px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.movies-save__button_delete {
+  opacity: 0;
+  background-color: #313131;
+  width: 21px;
+  height: 21px;
+  background-image: url('../../images/checkbox-delete.svg');
+  background-repeat: no-repeat;
+  background-size: 7px;
+  background-position: center;
+}
+
+.movie:hover .movies-save__button_delete{
+  opacity: 1;
+}
+
 @media screen and (max-width: 830px) {
   .movie__image {
     height: 190px;
@@ -150,5 +156,8 @@
   .movie__data {
     width: 100%;
     display: flex;
+  }
+  .movies-save__button_delete{
+    opacity: 1;
   }
 }

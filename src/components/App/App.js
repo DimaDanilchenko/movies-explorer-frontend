@@ -133,7 +133,7 @@ function App() {
       });
   }
 
-  function handleRegister({name, email, password }) {
+  function handleRegister({ name, email, password }) {
     auth.registerUser({ name, email, password })
       .then(() => {
         handleLogin({ email, password })
@@ -156,6 +156,7 @@ function App() {
     localStorage.removeItem('allMovies');
     localStorage.removeItem('isMoviesShort');
     localStorage.removeItem('checkboxStatus');
+    localStorage.removeItem('checkboxStatusSavedMovies')
     localStorage.removeItem('searchedMovies');
     setCurrentUser({});
     navigate('/', { replace: true });
@@ -302,15 +303,19 @@ function App() {
               />}
           />
           <Route path="/signup" element={
-            <Register
+            <ProtectedRoute
+              component={Register}
               handleRegister={handleRegister}
               isLoading={isLoading}
+              loggedIn={!loggedIn}
             />}
           />
           <Route path="/signin" element={
-            <Login
+            <ProtectedRoute
+              component={Login}
               handleLogin={handleLogin}
               isLoading={isLoading}
+              loggedIn={!loggedIn}
             />}
           />
           <Route path="/profile" element={

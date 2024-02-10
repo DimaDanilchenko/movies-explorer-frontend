@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, useLocation } from "react-router-dom";
 import { handleChangeDuration } from "../../utils/constants";
-import saveIcon from "../../images/save3d.svg";
-import savedIcon from "../../images/checkbox-saved.svg";
 import deleteIcon from "../../images/delete-icon.svg";
 import './MoviesCard.css';
 
@@ -45,7 +43,6 @@ export default function MoviesCard({ movie, onSaveMovie, onDeleteMovie, savedMov
           alt=""
           className={!savedMovie ? 'movie__save' : 'movie__save movies-save__button'}
           onClick={submitMovie}
-        // src={!savedMovie ? saveIcon : savedIcon}
         />
         :
         <img
